@@ -200,10 +200,11 @@ const { mode = 'ambient' } = Astro.props;
 
     // Dots
     for (const q of P) {
-      // Accent dots fade less, so the blue/pink stays visible in the background too.
-      ctx.globalAlpha = q.tone === 'fg' ? 0.9 - release * (q.node ? 0.35 : 0.68) : 1 - release * 0.35;
+      // Accent dots stay vivid in the hero text and fade to a soft tint in the background.
+      ctx.globalAlpha = q.tone === 'fg' ? 0.9 - release * (q.node ? 0.35 : 0.68) : 1 - release * 0.62;
       ctx.fillStyle = q.tone === 'fg' ? `rgb(${colors.fg})` : colors[q.tone];
-      const s = q.size * (q.tone === 'fg' ? 1 : 1.9);
+      // Accent dots are large in the hero text and shrink back to dot size once they become the background.
+      const s = q.size * (q.tone === 'fg' ? 1 : 1.9 - release * 0.6);
       ctx.fillRect(q.x - s / 2, q.y - s / 2, s, s);
     }
     ctx.globalAlpha = 1;
