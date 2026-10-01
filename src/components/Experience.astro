@@ -1,0 +1,49 @@
+---
+import { experience } from '../data/profile';
+---
+<ol class="timeline">
+  {experience.map(job => (
+    <li class="job glass reveal">
+      <div class="when">
+        <time>{job.period}</time>
+        {job.duration && <span>{job.duration}</span>}
+      </div>
+      <div class="what">
+        <h3>{job.title}</h3>
+        <p class="company">{job.company}<span>{job.meta}</span></p>
+        <p class="summary">{job.summary}</p>
+        {job.projects.map(p => (
+          <div class="project">
+            <h4>
+              {p.work ? <a href={`/work/${p.work}/`}>{p.name} <span aria-hidden="true">→</span></a> : p.name}
+            </h4>
+            <ul>{p.points.map(pt => <li>{pt}</li>)}</ul>
+          </div>
+        ))}
+        {job.tags && <div class="tags">{job.tags.map(t => <span class="tag">{t}</span>)}</div>}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .timeline { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .job { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding: 28px; }
+  .when time { display: block; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; }
+  .when span { font-size: 13px; color: var(--faint); }
+  h3 { font-size: 20px; line-height: 1.4; }
+  .company { color: var(--muted); font-size: 15px; margin-bottom: 10px; }
+  .company span { display: inline-block; margin-left: 10px; font-size: 13px; color: var(--faint); }
+  .summary { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
+  .project { margin-top: 16px; padding-left: 14px; border-left: 2px solid var(--line); }
+  h4 { font-size: 15.5px; margin-bottom: 4px; }
+  h4 a { transition: color .2s, background-size .3s; text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; }
+  h4 a:hover { background-size: 100% 1px; color: var(--accent); }
+  ul { padding-left: 1.1em; font-size: 14.5px; color: var(--muted); }
+  ul li { margin: 3px 0; }
+  .tags { margin-top: 16px; }
+  @media (max-width: 680px) {
+    .job { grid-template-columns: 1fr; gap: 8px; padding: 22px; }
+    .when { display: flex; gap: 10px; align-items: baseline; }
+  }
+</style>

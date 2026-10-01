@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { hasDetailPage } from '../data/categories';
+interface Props { entry: CollectionEntry<'work'>; size?: 'large' | 'small'; }
+const { entry, size = 'large' } = Astro.props;
+const d = entry.data;
+// Cards show years only ("2024/6 — 2026/1" -> "2024 — 2026"); a same-year range collapses to one year.
+const [from, to] = (d.period ?? '').replace(/\/\d+/g, '').split(' — ');
+const years = !to || from === to ? from : `${from} — ${to}`;
+// Link to the detail page if there is one; otherwise to the project's public site; otherwise no link.
+const detail = hasDetailPage(d.category);
+const href = detail ? `/work/${entry.id}/` : d.links[0]?.href;
+const external = !detail && !!href;
+const Tag = href ? 'a' : 'div';
+---
+<Tag
+  class:list={['work', 'glass', 'reveal', size, { static: !href }]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+>
+  <div class="thumb" oncontextmenu="return false">
+    {d.cover
+      ? <img src={d.cover} alt={d.coverAlt} loading="lazy" draggable="false" />
+      : <div class="text-cover" aria-hidden="true"><span>{d.company ?? d.category}</span><b>{d.title.split('：')[0]}</b></div>}
+  </div>
+  <div class="body">
+    {years && <p class="meta">{years}</p>}
+    <h3>{d.title}</h3>
+    <p class="summary">{d.summary}</p>
+    {size === 'large' && <div class="tags">{d.tags.slice(0, 3).map(t => <span class="tag">{t}</span>)}</div>}
+    {href && <span class="more">{external ? '前往網站' : '看案例'} <span aria-hidden="true">{external ? '↗' : '→'}</span></span>}
+  </div>
+</Tag>
+
+<style>
+  .work { overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: transform .35s, border-color .35s; }
+  .work:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .work.static:hover { transform: none; border-color: var(--line); }
+  /* Discourage saving thumbnails: no drag, no selection, no long-press menu, and a transparent layer over the image. */
+  .thumb { position: relative; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--glass-strong); }
+  .thumb::after { content: ""; position: absolute; inset: 0; }
+  .thumb img { pointer-events: none; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .6s; }
+  .work:hover .thumb img { transform: scale(1.03); }
+  .work.static:hover .thumb img { transform: none; }
+  .text-cover {
+    width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+    background:
+      radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 14px 14px,
+      radial-gradient(120% 90% at 85% 10%, color-mix(in srgb, var(--blue) 28%, transparent), transparent 60%),
+      radial-gradient(90% 80% at 10% 100%, color-mix(in srgb, var(--pink) 18%, transparent), transparent 60%);
+  }
+  .text-cover span { font-size: 12px; letter-spacing: .15em; color: var(--muted); }
+  .text-cover b { font-size: clamp(24px, 3vw, 34px); line-height: 1.2; font-weight: 800; letter-spacing: -.01em; }
+  .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .meta { font-size: 12px; color: var(--faint); letter-spacing: .04em; }
+  h3 { font-size: 19px; line-height: 1.45; }
+  .summary { font-size: 14.5px; color: var(--muted); }
+  .tags { margin-top: 6px; }
+  .more { margin-top: auto; padding-top: 10px; font-size: 13px; color: var(--muted); transition: color .2s; }
+  .work:hover .more { color: var(--accent); }
+  .small h3 { font-size: 17px; }
+  .small .thumb { aspect-ratio: 16 / 9; }
+</style>

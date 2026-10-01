@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import Social from '../components/Social.astro';
+import { profile, about, education, skills, certificates, awards } from '../data/profile';
+---
+<Base title="關於我" description={`${profile.nameZh}的自我介紹、學歷、專長、證照與得獎經歷。`}>
+  <main class="wrap page">
+    <header class:list={["about-head", { "has-photo": profile.photo }]}>
+      {profile.photo && (
+        <figure class="portrait glass"><img src={profile.photo} alt={`${profile.nameZh}的照片`} width="600" height="800" /></figure>
+      )}
+      <div class="head-text">
+      <div class="eyebrow">About</div>
+      <h1>{profile.nameZh}<span>{profile.nameEn}</span></h1>
+      <p class="title">{profile.title}</p>
+      <blockquote class="motto">{profile.motto}<cite>— Romans 12:2</cite></blockquote>
+      <div class="chips">
+        <span class="chip dot">{profile.status}</span>
+        <span class="chip">{profile.location}</span>
+      </div>
+      <Social />
+      </div>
+    </header>
+
+    <section class="card glass reveal">
+      <h2>自我介紹</h2>
+      {about.map(a => (
+        <div class="para">
+          <h3>{a.heading}</h3>
+          <p>{a.body}</p>
+        </div>
+      ))}
+    </section>
+
+    <section class="card glass reveal">
+      <h2>學歷</h2>
+      <ol class="list">
+        {education.map(e => (
+          <li><div><b>{e.school}</b><span>{e.dept}</span></div><time>{e.period}</time></li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="card glass reveal">
+      <h2>專長</h2>
+      <div class="skills">
+        {skills.map(s => (
+          <div class="skill">
+            <h3>{s.name}</h3>
+            <p>{s.desc}</p>
+            <div class="tags">{s.tags.map(t => <span class="tag">{t}</span>)}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="two">
+      <section class="card glass reveal">
+        <h2>得獎經歷</h2>
+        <ol class="list awards">
+          {awards.map(a => <li><time>{a.year}</time><div><b>{a.name}</b><span>{a.result}</span></div></li>)}
+        </ol>
+      </section>
+      <section class="card glass reveal">
+        <h2>證照與認證</h2>
+        <ol class="list">
+          {certificates.map(c => <li><div><b>{c.name}</b><span>{c.org}</span></div></li>)}
+        </ol>
+      </section>
+    </div>
+
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: 140px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 20px; }
+  .about-head { margin-bottom: 28px; }
+  .about-head.has-photo { display: grid; grid-template-columns: 1fr 150px; gap: 48px; align-items: center; }
+  .portrait { order: 2; margin: 0; padding: 8px; border-radius: 28px; }
+  .portrait img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 20px; }
+  @media (max-width: 760px) {
+    .about-head.has-photo { grid-template-columns: 1fr; gap: 28px; }
+    .portrait { order: 0; max-width: 130px; }
+  }
+  h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.15; }
+  h1 span { display: block; font-size: .42em; font-weight: 300; letter-spacing: .12em; color: var(--muted); margin-top: 6px; }
+  .title { margin-top: 12px; font-size: 18px; }
+  .motto { margin: 28px 0; padding-left: 18px; border-left: 2px solid var(--blue); font-style: italic; font-weight: 300; font-size: clamp(18px, 2.4vw, 24px); }
+  .motto cite { display: block; font-size: 13px; font-style: normal; color: var(--faint); margin-top: 6px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+
+  .card { padding: clamp(24px, 4vw, 44px); background: var(--glass-read); }
+  .card h2 { font-size: 22px; margin-bottom: 20px; }
+  .para + .para { margin-top: 22px; }
+  .para h3 { font-size: 16.5px; margin-bottom: 4px; }
+  .para p { color: var(--muted); font-size: 15.5px; line-height: 1.9; }
+
+  .list { list-style: none; }
+  .list li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .list li:first-child { border-top: 0; padding-top: 0; }
+  .list b { display: block; font-weight: 600; }
+  .list span { font-size: 14px; color: var(--muted); }
+  .list time { font-size: 14px; color: var(--muted); font-family: Inter, sans-serif; white-space: nowrap; }
+  .awards li { justify-content: flex-start; }
+  .awards time { width: 48px; flex: none; }
+
+  .skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 36px; }
+  .skill h3 { font-size: 16.5px; margin-bottom: 6px; }
+  .skill p { font-size: 15px; color: var(--muted); margin-bottom: 10px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 760px) { .skills, .two { grid-template-columns: 1fr; } }
+
+</style>

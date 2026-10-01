@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getCollection } from 'astro:content';
+import { categories } from '../../data/categories';
+
+const all = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="全部作品" description="張品妏的作品：正職專案、個人產品、接案作品、競賽與學生作品。">
+  <main class="wrap page">
+    <div class="eyebrow">Work</div>
+    <h1>全部作品</h1>
+    <div class="filters" role="group" aria-label="依分類篩選">
+      <button type="button" data-filter="" aria-pressed="true">全部 <b>{all.length}</b></button>
+      {categories.map(c => (
+        <button type="button" data-filter={c} aria-pressed="false">{c} <b>{all.filter(w => w.data.category === c).length}</b></button>
+      ))}
+    </div>
+
+    {categories.map(c => (
+      <section class="group" data-group={c}>
+        <h2>{c}</h2>
+        <div class="grid">
+          {all.filter(w => w.data.category === c).map(w => <WorkCard entry={w} size="small" />)}
+        </div>
+      </section>
+    ))}
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: 140px; position: relative; z-index: 1; }
+  h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.2; margin-bottom: 28px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; position: sticky; top: 84px; z-index: 5; }
+  .filters button { font: inherit; font-size: 14px; color: var(--muted); padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--glass-bar); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); cursor: pointer; transition: color .2s, border-color .2s; }
+  .filters button b { font-weight: 400; color: var(--faint); margin-left: 4px; }
+  .filters button:hover { color: var(--fg); }
+  .filters button[aria-pressed="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+  .filters button[aria-pressed="true"] b { color: var(--bg); opacity: .6; }
+  .group { padding-top: 48px; }
+  .group[hidden] { display: none; }
+  .group h2 { font-size: 20px; margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+  .group h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .filters { top: 76px; } }
+</style>
+
+<script>
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
+  function apply(c: string) {
+    buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === c)));
+    groups.forEach(g => { g.hidden = !!c && g.dataset.group !== c; });
+    // Cards revealed by scrolling should show immediately when filtered in.
+    groups.forEach(g => g.querySelectorAll('.reveal').forEach(el => !g.hidden && el.classList.add('in')));
+    const url = new URL(location.href);
+    c ? url.searchParams.set('c', c) : url.searchParams.delete('c');
+    history.replaceState(null, '', url);
+  }
+  buttons.forEach(b => b.addEventListener('click', () => apply(b.dataset.filter || '')));
+  const initial = new URLSearchParams(location.search).get('c');
+  if (initial && buttons.some(b => b.dataset.filter === initial)) apply(initial);
+</script>

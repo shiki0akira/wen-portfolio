@@ -1,0 +1,234 @@
+---
+// Full-screen particle canvas.
+// mode="hero": particles spell WEN, then re-form into the job title as the .hero section scrolls,
+//              then dissolve into a quiet dot-and-line background.
+// mode="ambient": only the quiet background (used on inner pages).
+interface Props { mode?: 'hero' | 'ambient'; }
+const { mode = 'ambient' } = Astro.props;
+---
+<canvas id="field" data-mode={mode} aria-hidden="true"></canvas>
+
+<style>
+  #field { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+</style>
+
+<script>
+  const cvs = document.getElementById('field') as HTMLCanvasElement;
+  const ctx = cvs.getContext('2d')!;
+  const heroMode = cvs.dataset.mode === 'hero';
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hero = document.querySelector<HTMLElement>('.hero');
+  const heroSub = document.getElementById('heroSub');
+  const heroHint = document.getElementById('heroHint');
+  const heroName = document.getElementById('heroName');
+  const heroMotto = document.getElementById('heroMotto');
+
+  type Pt = [number, number];
+  type Particle = {
+    x: number; y: number; ax: number; ay: number; bx: number; by: number;
+    sx: number; sy: number; ox: number; oy: number; depth: number; ph: number;
+    tone: 'fg' | 'blue' | 'pink'; node: boolean; size: number;
+  };
+
+  let W = 0, H = 0, P: Particle[] = [], link = 8;
+  let colors = { fg: '242,242,244', blue: '#8799e9', pink: '#f3a4fb' };
+  const mouse = { x: -9999, y: -9999 };
+  const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const ease = (t: number) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  function readColors() {
+    const cs = getComputedStyle(root);
+    colors = { fg: cs.getPropertyValue('--particle').trim(), blue: cs.getPropertyValue('--blue').trim(), pink: cs.getPropertyValue('--pink').trim() };
+  }
+
+  // Sample filled pixels of the text; widen the gap if it would make too many particles.
+  function sample(lines: string[], size: number, gap: number, lh: number, max: number) {
+    const off = document.createElement('canvas');
+    off.width = W; off.height = H;
+    const o = off.getContext('2d', { willReadFrequently: true })!;
+    o.textAlign = 'center'; o.textBaseline = 'middle';
+    o.font = `800 ${size}px Inter, "Noto Sans TC", sans-serif`;
+    const total = lines.length * lh;
+    lines.forEach((t, i) => o.fillText(t, W / 2, H / 2 - total / 2 + lh * (i + 0.5)));
+    const d = o.getImageData(0, 0, W, H).data;
+    let pts: Pt[] = [];
+    for (let tries = 0; tries < 4; tries++) {
+      pts = [];
+      const g = Math.round(gap);
+      for (let y = 0; y < H; y += g)
+        for (let x = 0; x < W; x += g)
+          if (d[(y * W + x) * 4 + 3] > 140) pts.push([x + (Math.random() - .5) * g * .6, y + (Math.random() - .5) * g * .6]);
+      if (pts.length <= max) break;
+      gap *= 1.15;
+    }
+    for (let i = pts.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [pts[i], pts[j]] = [pts[j], pts[i]]; }
+    return { pts, height: total, gap };
+  }
+
+  function build() {
+    const DPR = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    if (!W || !H) { setTimeout(build, 200); return; }
+    cvs.width = W * DPR; cvs.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const mobile = W < 640;
+    const nodeCount = Math.round(W * H / 24000);
+    let A: Pt[] = [], B: Pt[] = [];
+
+    if (heroMode) {
+      const aSize = Math.min(W * 0.34, H * 0.42, 380);
+      const a = sample(['WEN'], aSize, mobile ? 3.5 : 4.5, aSize, mobile ? 2600 : 6000);
+      const bLines = mobile ? ['UI/UX', 'Designer &', 'Product Planner'] : ['UI/UX Designer', '& Product Planner'];
+      const bSize = mobile ? Math.min(W * 0.095, 52) : Math.min(W * 0.075, 96);
+      const b = sample(bLines, bSize, mobile ? 2.2 : 3.2, bSize * 1.12, mobile ? 3400 : 6000);
+      A = a.pts; B = b.pts;
+      link = a.gap * 1.6;
+      if (heroSub) heroSub.style.top = `${H / 2 + b.height / 2 + 28}px`;
+      if (heroMotto) heroMotto.style.top = `${H / 2 + aSize * 0.42 + 36}px`;
+    }
+
+    const N = heroMode ? Math.max(A.length, B.length) : Math.round(W * H / 1400);
+    const R = Math.min(W, H) * 0.35;
+    P = [];
+    for (let i = 0; i < N; i++) {
+      const a = A.length ? A[i % A.length] : [Math.random() * W, Math.random() * H];
+      const b = B.length ? B[i % B.length] : a;
+      const ang = Math.random() * Math.PI * 2, rr = R * (0.3 + Math.random() * 0.7);
+      const r = Math.random();
+      P.push({
+        x: heroMode ? Math.random() * W : a[0], y: heroMode ? Math.random() * H : a[1],
+        ax: a[0], ay: a[1], bx: b[0], by: b[1],
+        sx: Math.cos(ang) * rr, sy: Math.sin(ang) * rr,
+        ox: Math.random() * W, oy: Math.random() * H, depth: 0.2 + Math.random() * 0.8,
+        ph: Math.random() * Math.PI * 2,
+        tone: r < 0.07 ? 'blue' : r < 0.11 ? 'pink' : 'fg',
+        node: i < nodeCount,
+        size: 0.8 + Math.random() * 0.9,
+      });
+    }
+  }
+
+  function state() {
+    if (!heroMode || !hero) return { p: 1, morph: 1, release: 1 };
+    const range = hero.offsetHeight - H;
+    const p = clamp(scrollY / range);
+    const morph = ease(clamp((p - 0.12) / 0.4));
+    const release = ease(clamp((scrollY - range * 0.82) / (H * 0.9)));
+    return { p, morph, release };
+  }
+
+  const grid = new Map<string, Particle[]>();
+  const buckets: number[][] = [[], [], [], []];
+
+  function frame(t: number) {
+    if (!P.length) { requestAnimationFrame(frame); return; }
+    const { p, morph, release } = state();
+    if (heroMode) {
+      if (heroHint) heroHint.style.opacity = String(1 - clamp(p / 0.08));
+      if (heroName) heroName.style.opacity = String(1 - clamp((p - 0.05) / 0.12));
+      if (heroMotto) heroMotto.style.opacity = String(1 - clamp(p / 0.1));
+      if (heroSub) heroSub.style.opacity = String(clamp((morph - 0.85) / 0.15) * (1 - clamp(release * 2.2)));
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    const k = reduce ? 1 : 0.085;
+    const scatter = Math.sin(Math.PI * morph);
+    const textLink = link * (1 - release);
+    const netLink = 170 * release;
+    const cell = Math.max(textLink, netLink, 1);
+    grid.clear();
+
+    for (let i = 0; i < P.length; i++) {
+      const q = P[i];
+      const wob = reduce ? 0 : Math.sin(t * 0.0012 + q.ph) * 0.6;
+      let tx = q.ax + (q.bx - q.ax) * morph + q.sx * scatter + wob;
+      let ty = q.ay + (q.by - q.ay) * morph + q.sy * scatter + wob;
+      if (release > 0) {
+        const drift = reduce ? 0 : t * 0.006 * q.depth;
+        const fx = (q.ox + drift) % W;
+        const fy = (((q.oy - scrollY * 0.18 * q.depth) % H) + H) % H;
+        tx += (fx - tx) * release; ty += (fy - ty) * release;
+      }
+      // Avoid long streaks when a particle wraps around the screen edge.
+      if (Math.abs(tx - q.x) > W / 2 || Math.abs(ty - q.y) > H / 2) { q.x = tx; q.y = ty; }
+      q.x += (tx - q.x) * k; q.y += (ty - q.y) * k;
+      if (!reduce) {
+        const dx = q.x - mouse.x, dy = q.y - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < 8100) { const d = Math.sqrt(d2) || 1, f = (1 - d / 90) * 6; q.x += dx / d * f; q.y += dy / d * f; }
+      }
+      if (textLink > 1 || q.node) {
+        const key = ((q.x / cell) | 0) + ',' + ((q.y / cell) | 0);
+        let arr = grid.get(key); if (!arr) grid.set(key, (arr = [])); arr.push(q);
+      }
+    }
+
+    // Lines, batched into a few opacity levels so each level is one stroke call.
+    for (const b of buckets) b.length = 0;
+    for (const [key, arr] of grid) {
+      const [gx, gy] = key.split(',').map(Number);
+      for (let ox = 0; ox <= 1; ox++) for (let oy = -1; oy <= 1; oy++) {
+        if (ox === 0 && oy === -1) continue;
+        const other = grid.get((gx + ox) + ',' + (gy + oy)); if (!other) continue;
+        const same = ox === 0 && oy === 0;
+        for (let i = 0; i < arr.length; i++) {
+          const a = arr[i];
+          for (let j = same ? i + 1 : 0; j < other.length; j++) {
+            const b = other[j];
+            let lim = textLink;
+            if (a.node && b.node) lim = Math.max(lim, netLink);
+            if (lim < 1) continue;
+            const dx = a.x - b.x, dy = a.y - b.y;
+            if (dx > lim || dx < -lim || dy > lim || dy < -lim) continue;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d > lim) continue;
+            const level = Math.min(3, ((1 - d / lim) * 4) | 0);
+            buckets[level].push(a.x, a.y, b.x, b.y);
+          }
+        }
+      }
+    }
+    const lineMax = release > 0.5 ? 0.18 : 0.34;
+    ctx.lineWidth = 0.6;
+    buckets.forEach((segs, level) => {
+      if (!segs.length) return;
+      ctx.strokeStyle = `rgba(${colors.fg},${((level + 1) / 4) * lineMax})`;
+      ctx.beginPath();
+      for (let i = 0; i < segs.length; i += 4) { ctx.moveTo(segs[i], segs[i + 1]); ctx.lineTo(segs[i + 2], segs[i + 3]); }
+      ctx.stroke();
+    });
+
+    // Dots
+    for (const q of P) {
+      ctx.globalAlpha = 0.9 - release * (q.node ? 0.35 : 0.68);
+      ctx.fillStyle = q.tone === 'fg' ? `rgb(${colors.fg})` : colors[q.tone];
+      const s = q.size * (q.tone === 'fg' ? 1 : 1.4);
+      ctx.fillRect(q.x - s / 2, q.y - s / 2, s, s);
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+
+  // Dev-only helper: run frames synchronously to check the canvas while the page isn't being painted.
+  if (import.meta.env.DEV) {
+    (window as any).__step = (n: number, t0 = 0) => {
+      const raf = window.requestAnimationFrame;
+      window.requestAnimationFrame = () => 0;
+      for (let i = 0; i < n; i++) frame(t0 + i * 16);
+      window.requestAnimationFrame = raf;
+    };
+  }
+
+  addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  document.addEventListener('pointerleave', () => { mouse.x = mouse.y = -9999; });
+  let rt: number | undefined;
+  addEventListener('resize', () => { clearTimeout(rt); rt = window.setTimeout(build, 200); });
+  addEventListener('themechange', readColors);
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', readColors);
+
+  readColors();
+  document.fonts.load('800 100px Inter').then(() => document.fonts.ready).then(() => {
+    build();
+    requestAnimationFrame(frame);
+  });
+</script>

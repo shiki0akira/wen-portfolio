@@ -1,0 +1,34 @@
+---
+import { siGithub, siBehance, siThreads } from 'simple-icons';
+import { profile } from '../data/profile';
+
+// LinkedIn is not in simple-icons, so it uses a simple hand-drawn "in" mark.
+const linkedin = '<rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="8" r="1.4"/><rect x="6.8" y="10.5" width="2.4" height="7" rx=".4"/><path d="M11.4 10.5h2.3v1a3 3 0 0 1 2.6-1.2c2 0 3 1.2 3 3.6v3.6h-2.4v-3.3c0-1.2-.4-1.8-1.4-1.8s-1.7.7-1.7 1.9v3.2h-2.4z"/>';
+const mail = '<rect x="2.5" y="5" width="19" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
+const brand: Record<string, string> = {
+  LinkedIn: linkedin,
+  Behance: `<path d="${siBehance.path}"/>`,
+  GitHub: `<path d="${siGithub.path}"/>`,
+  Threads: `<path d="${siThreads.path}"/>`,
+};
+const items = [
+  { label: 'Email', href: `mailto:${profile.email}`, svg: mail },
+  ...profile.links.map(l => ({ ...l, svg: brand[l.label] })),
+];
+---
+<ul class="social">
+  {items.map(i => (
+    <li>
+      <a href={i.href} target={i.href.startsWith('http') ? '_blank' : undefined} rel="noopener" aria-label={i.label} title={i.label}>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" set:html={i.svg} />
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .social { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; }
+  a { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: var(--glass-strong); color: var(--muted); transition: color .2s, border-color .2s, transform .2s; }
+  a:hover { color: var(--fg); border-color: var(--accent); transform: translateY(-2px); }
+  svg { width: 18px; height: 18px; }
+</style>

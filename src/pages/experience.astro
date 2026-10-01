@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import Experience from '../components/Experience.astro';
+---
+<Base title="經歷" description="張品妏的工作經歷：BigGo、榮興自動化、AI Art 智光網、旗津窯與自由接案。">
+  <main class="wrap page">
+    <div class="eyebrow">Experience</div>
+    <h1>經歷</h1>
+    <p class="lead">6 年來從實體產品設計走到軟體 UX 與產品規劃。點專案名稱可以看完整案例。</p>
+    <Experience />
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: 140px; position: relative; z-index: 1; }
+  h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.2; margin-bottom: 16px; }
+  .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 36em; margin-bottom: 40px; }
+</style>
