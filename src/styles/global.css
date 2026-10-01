@@ -13,6 +13,9 @@
   --pink: #f3a4fb;
   --accent: var(--pink); /* hover / interactive highlight: pink in dark, blue in light */
   --particle: 242, 242, 244;
+  /* Accent particles: brighter than text accents so they read against the background. */
+  --dot-blue: #9aaaff;
+  --dot-pink: #ff9cf7;
   --radius: 20px;
   --wrap: min(1080px, calc(100% - 32px));
   color-scheme: dark;
@@ -33,6 +36,8 @@
     --pink: #ba82c4;
     --accent: var(--blue);
     --particle: 17, 17, 19;
+    --dot-blue: #4d63e8;
+    --dot-pink: #d94fd0;
     color-scheme: light;
   }
 }
@@ -51,6 +56,8 @@
   --pink: #ba82c4;
   --accent: var(--blue);
   --particle: 17, 17, 19;
+  --dot-blue: #4d63e8;
+  --dot-pink: #d94fd0;
   color-scheme: light;
 }
 

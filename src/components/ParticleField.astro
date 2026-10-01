@@ -39,7 +39,7 @@ const { mode = 'ambient' } = Astro.props;
 
   function readColors() {
     const cs = getComputedStyle(root);
-    colors = { fg: cs.getPropertyValue('--particle').trim(), blue: cs.getPropertyValue('--blue').trim(), pink: cs.getPropertyValue('--pink').trim() };
+    colors = { fg: cs.getPropertyValue('--particle').trim(), blue: cs.getPropertyValue('--dot-blue').trim(), pink: cs.getPropertyValue('--dot-pink').trim() };
   }
 
   // Sample filled pixels of the text; widen the gap if it would make too many particles.
@@ -102,7 +102,7 @@ const { mode = 'ambient' } = Astro.props;
         sx: Math.cos(ang) * rr, sy: Math.sin(ang) * rr,
         ox: Math.random() * W, oy: Math.random() * H, depth: 0.2 + Math.random() * 0.8,
         ph: Math.random() * Math.PI * 2,
-        tone: r < 0.07 ? 'blue' : r < 0.11 ? 'pink' : 'fg',
+        tone: r < 0.1 ? 'blue' : r < 0.18 ? 'pink' : 'fg',
         node: i < nodeCount,
         size: 0.8 + Math.random() * 0.9,
       });
@@ -200,9 +200,10 @@ const { mode = 'ambient' } = Astro.props;
 
     // Dots
     for (const q of P) {
-      ctx.globalAlpha = 0.9 - release * (q.node ? 0.35 : 0.68);
+      // Accent dots fade less, so the blue/pink stays visible in the background too.
+      ctx.globalAlpha = q.tone === 'fg' ? 0.9 - release * (q.node ? 0.35 : 0.68) : 1 - release * 0.35;
       ctx.fillStyle = q.tone === 'fg' ? `rgb(${colors.fg})` : colors[q.tone];
-      const s = q.size * (q.tone === 'fg' ? 1 : 1.4);
+      const s = q.size * (q.tone === 'fg' ? 1 : 1.9);
       ctx.fillRect(q.x - s / 2, q.y - s / 2, s, s);
     }
     ctx.globalAlpha = 1;
