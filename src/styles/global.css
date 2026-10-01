@@ -34,7 +34,7 @@
     --shadow: 0 8px 32px rgba(37, 44, 75, 0.1);
     --blue: #6776b5;
     --pink: #ba82c4;
-    --accent: var(--blue);
+    --accent: #4558e0;
     --particle: 17, 17, 19;
     --dot-blue: #4d63e8;
     --dot-pink: #d94fd0;
@@ -54,7 +54,7 @@
   --shadow: 0 8px 32px rgba(37, 44, 75, 0.1);
   --blue: #6776b5;
   --pink: #ba82c4;
-  --accent: var(--blue);
+  --accent: #4558e0;
   --particle: 17, 17, 19;
   --dot-blue: #4d63e8;
   --dot-pink: #d94fd0;
