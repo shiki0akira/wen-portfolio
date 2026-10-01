@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Social from '../components/Social.astro';
 import { profile, about, education, skills, awards } from '../data/profile';
 ---
-<Base title="關於我" description={`${profile.nameZh}的自我介紹、學歷、專長與得獎經歷。`}>
+<Base title="關於我" description="About Wen: UI/UX designer and product planner with 6 years of experience across e-commerce, B2B SaaS and AI products.">
   <main class="wrap page">
     <header class:list={["about-head", { "has-photo": profile.photo }]}>
       {profile.photo && (

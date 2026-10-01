@@ -14,11 +14,13 @@ interface Props {
 }
 const {
   title,
-  description = `${profile.nameZh}｜${profile.title}。${profile.tagline}`,
+  description = "UI/UX Designer & Product Planner. I turn fuzzy ideas into clear specs and shipped products, from UX design to AI-assisted builds.",
   field = 'ambient',
   image = '/og.png',
 } = Astro.props;
-const fullTitle = title ? `${title}｜${profile.nameZh} ${profile.nameEn}` : `${profile.nameZh} ${profile.nameEn}｜${profile.title}`;
+// Share titles use the brand name only (no full name): "WEN．UI/UX Designer & Product Planner".
+const brand = `WEN．${profile.title}`;
+const fullTitle = title ? `${title}｜WEN` : brand;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const nav = [
   { href: '/work/', label: '作品' },
