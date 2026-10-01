@@ -7,7 +7,8 @@ period: 2020 — 2022
 role: UI/UX 設計師（獨立負責）
 type: 金融科技・DApp
 tags: [金融科技, DApp, 設計系統, Prototype]
-order: 8
+order: 6
+compactImages: true
 links:
   - { label: 專案紀錄（Notion）, href: "https://zest-screen-4f3.notion.site/AI-Hedge-finance-bf0b8381ad174589b73826589363731c" }
   - { label: 教學影片（YouTube）, href: "https://www.youtube.com/watch?v=aRPtWldRjx8" }
@@ -15,19 +16,20 @@ cover: /images/aihedge/dapp-cover.webp
 coverAlt: AI Hedge.finance 的網頁版與手機版畫面
 ---
 
-## 背景
+## 專案簡介
 
-AI Hedge.finance 是一個加密貨幣交易平台。交易、連接錢包這些步驟對一般人很陌生，一個地方沒看懂就可能操作錯誤。
+AI Hedge.finance 是一個加密貨幣投資平台，用機器學習和金融模型找出交易機會。使用者連接錢包後，就能存入資產、選擇投資策略。
 
-## 我的角色
+## 要解決的問題
 
-全遠端工作，從流程、線框圖、原型到設計規範，網頁版和手機版都由我獨立完成。
+- **步驟很陌生**：連接錢包、兌換幣種、存入資產，對一般人都是新東西，一步沒看懂就可能操作錯誤。
+- **錢不能出錯**：每一步都牽涉到真實的資產，使用者需要清楚知道自己正在做什麼。
 
-## 我做了什麼
+## 設計重點
 
 ### 先把流程想清楚
 
-從登入、連接錢包、存入資產到開始投資，我先畫出完整的使用流程，確定每一步該出現什麼，再開始畫畫面。
+從登入、連接錢包、存入資產到開始投資，先畫出完整的使用流程，確定每一步該出現什麼，再開始畫畫面。
 
 ![AI Hedge.finance 的使用流程圖](/images/aihedge/dapp-userflow.webp)
 
@@ -37,9 +39,9 @@ AI Hedge.finance 是一個加密貨幣交易平台。交易、連接錢包這些
 
 ![AI Hedge.finance 的設計規範](/images/aihedge/dapp-design-system.webp)
 
-### 線框圖到完整畫面
+### 每個重要動作都再確認一次
 
-先用線框圖確認版面，再做出網頁版和手機版的完整畫面。交易和連接錢包前，都會跳出確認視窗，避免使用者按錯。
+兌換、存入、投資、贖回之前，都會跳出確認視窗，說明這一步會做什麼，避免使用者按錯。
 
 ![AI Hedge.finance 的線框圖](/images/aihedge/dapp-wireframe.webp)
 
@@ -47,6 +49,6 @@ AI Hedge.finance 是一個加密貨幣交易平台。交易、連接錢包這些
 
 ![AI Hedge.finance 手機版畫面](/images/aihedge/dapp-mobile.webp)
 
-### 製作教學影片
+### 教學影片
 
-錄製「建立 MetaMask 錢包並連接 AI Hedge」的教學影片，讓新使用者更快上手。
+製作「建立 MetaMask 錢包並連接 AI Hedge」的教學影片，新使用者跟著做就能完成第一次操作。

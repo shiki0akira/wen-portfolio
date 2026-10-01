@@ -17,7 +17,10 @@ const work = defineCollection({
     coverAlt: z.string().default(''),
     tags: z.array(z.string()),
     order: z.number(),
-    featured: z.boolean().default(false),
+    // Position on the home page (1 = first). Leave out to keep a work off the home page.
+    featured: z.number().optional(),
+    // Show in-article images smaller (e.g. pages with many tall design boards).
+    compactImages: z.boolean().default(false),
     metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
   }),

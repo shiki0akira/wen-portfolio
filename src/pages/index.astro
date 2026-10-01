@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import { profile, services, experience } from '../data/profile';
 
 const all = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-const featured = all.filter(w => w.data.featured);
+const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured! - b.data.featured!);
 ---
 <Base field="hero">
   <header class="hero" id="top">
@@ -61,7 +61,7 @@ const featured = all.filter(w => w.data.featured);
         <h2>經歷</h2>
         <ul class="jobs">
           {experience.map(j => (
-            <li><time>{j.period.split(' — ')[0].split('/')[0]}</time><span>{j.company}</span></li>
+            <li><time>{j.period.split(' — ')[0].split('/')[0]}</time><div><b>{j.title}</b><span>{j.company}</span></div></li>
           ))}
         </ul>
         <span class="go">看完整經歷 <span aria-hidden="true">→</span></span>
@@ -116,8 +116,10 @@ const featured = all.filter(w => w.data.featured);
   .teaser h2 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 18px; }
   .mini, .jobs { list-style: none; margin-bottom: 24px; }
   .mini li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
-  .jobs li { display: flex; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; }
+  .jobs li { display: flex; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15px; }
   .jobs time { width: 44px; flex: none; color: var(--faint); font-family: Inter, sans-serif; }
+  .jobs b { display: block; font-weight: 500; }
+  .jobs li span { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
   .go { margin-top: auto; font-size: 14px; color: var(--muted); }
   .teaser:hover .go { color: var(--accent); }
   @media (max-width: 760px) { .works, .split { grid-template-columns: 1fr; } }

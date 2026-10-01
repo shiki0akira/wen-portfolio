@@ -66,7 +66,7 @@ const nav = [
       <div class="eyebrow">Contact</div>
       <h2>一起聊聊？</h2>
       <p>想找人一起做產品、設計介面，或有任何合作機會，都歡迎來信。可遠端合作。</p>
-      <a class="btn primary" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a class="btn primary" href={`mailto:${profile.email}`}>與我聯絡 <span aria-hidden="true">→</span></a>
     </section>
 
     <footer class="site-footer">
@@ -99,7 +99,6 @@ const nav = [
       </div>
       <div class="foot-bottom">
         <small>© {new Date().getFullYear()} {profile.nameEn}. All rights reserved.</small>
-        <small>{profile.location}</small>
       </div>
     </footer>
 

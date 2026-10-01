@@ -48,13 +48,6 @@ export const experience: Job[] = [
     summary: '接 UI/UX 設計案，同時經營自己的產品 Web100。',
     projects: [
       {
-        name: '接案：營造工地監控面板（已交付）',
-        points: [
-          '從架構、流程到介面與元件規範，完整負責整個面板的設計',
-          '把人臉辨識和空氣品質兩套監控資料，整理成一眼看得懂的畫面',
-        ],
-      },
-      {
         name: '個人產品：Web100 互動網頁小遊戲',
         work: 'web100',
         points: [
@@ -87,7 +80,7 @@ export const experience: Job[] = [
         work: 'pms',
         points: [
           '設計數據圖表與企業用的功能，幫品牌商省下人工比價的時間',
-          '導入 LG、萬家福、中華郵政、桂格等企業客戶，年活躍用戶近 1,000 人',
+          '導入 LG、萬家福、中華郵政、桂格等企業客戶',
         ],
       },
       {
@@ -98,7 +91,7 @@ export const experience: Job[] = [
       {
         name: 'Dive：開源 AI 桌面應用',
         work: 'dive',
-        points: ['優化使用流程，讓公司的 AI 產品使用同一套設計規範'],
+        points: ['協助檢視使用流程，參與 Dive 與 OAPhub 設計規範的統一'],
       },
     ],
     tags: ['Figma', 'SaaS', '競品分析', 'AI'],
@@ -207,40 +200,43 @@ export const awards = [
   { year: '2016', name: '健康科技 APP 應用創新競賽', result: '第三名、表板設計第二名' },
 ];
 
-export const certificates = [
-  { name: '大型語言模型（LLM）課程認證', org: 'Google' },
-  { name: '生成式 AI 課程認證', org: 'Google' },
-  { name: 'Adobe Photoshop', org: 'Adobe' },
-  { name: 'Adobe Illustrator', org: 'Adobe' },
-  { name: '乙級印前製程技術士', org: '勞動部勞動力發展署技能檢定中心' },
-];
-
-export const about = [
+// About page self-introduction. Each section has paragraphs and/or numbered points.
+export type AboutSection = { heading: string; body?: string[]; points?: { title: string; text: string }[] };
+export const about: AboutSection[] = [
   {
     heading: '關於我',
-    body: '北科大工業設計系畢業，現在在成大工設研究所在職專班就讀。6 年來從實體產品設計走到軟體 UX，一直在做同一件事：搞清楚使用者真正需要什麼，再把它做出來。',
+    body: [
+      '我是張品妏（Wen），有 6 年經驗的 UI/UX 設計師與產品規劃。做過電商、B2B SaaS、AI、金融科技和工業設備等產業的產品，從整理需求、設計介面，到用 AI 把網站做上線，都可以一起完成。',
+    ],
   },
   {
-    heading: '設計師的工作，不只是畫面',
-    body: '在 BigGo，我負責 Shopify 圖片搜尋套件 BIRSE。我主動提出申請 Shopify 官方認證，自己研讀規範、調整產品，最後成功取得。到後期，這個產品幾乎由我全權負責。這段經驗讓我確定，我想做的是為產品的結果負責，而不只是交出畫面。',
+    heading: '做過的產品',
+    body: [
+      '在 BigGo 負責 Shopify App BIRSE，取得 Shopify 官方認證，累積 500+ 家電商客戶。也設計過導入 LG、萬家福等企業的價格監控系統，並用 2 個月完成研發期一年的倉儲系統改版。',
+    ],
   },
   {
-    heading: '把 AI 當成真正的工具',
-    body: '我用 Claude Code 做出 Web100 系列 6 個產品。第一個只花了 4 個晚上，最大的「幸福模擬器」約 3 週。我的做法是：先和 AI 討論規則、寫成規格，再交給 AI 實作，最後由我驗收。AI 負責執行，判斷由我負責。',
+    heading: '合作時你可以期待',
+    points: [
+      { title: '先搞懂需求，再動手設計', text: '先釐清目標使用者和要解決的問題，不做好看卻用不到的畫面。' },
+      { title: '交付的設計，工程師拿到就能做', text: '流程、規格和元件都整理清楚，減少來回溝通。我也懂前端，能直接和你的工程師討論做法。' },
+      { title: '用 AI 加快速度', text: '用 Claude Code 從規格到上線，最快 4 個晚上做出第一個產品，適合想快速驗證想法的專案。' },
+      { title: '遠端合作很順', text: '有近兩年全遠端工作的經驗，用 Figma、GitHub 協作，定期同步進度，依回饋調整。' },
+    ],
   },
 ];
 
 // For freelance clients (home page "合作" section).
 export const services = [
   {
-    name: '產品規劃與規格',
-    desc: '幫你把想法整理成清楚的流程和規格，工程師拿到就能開發。',
-    tags: ['新產品', '需求整理', '規格文件'],
-  },
-  {
     name: 'UI/UX 介面設計',
     desc: '網站、App、後台與儀表板的介面設計，附可以點的原型。',
     tags: ['B2B 系統', '管理後台', '電商'],
+  },
+  {
+    name: 'AI 輔助生成網站',
+    desc: '用 Claude Code 從規格到上線，快速做出能實際使用的網站。',
+    tags: ['活動網站', '產品驗證'],
   },
   {
     name: '設計系統',
@@ -248,9 +244,9 @@ export const services = [
     tags: ['系統改版', '元件庫'],
   },
   {
-    name: '用 AI 快速做出網站',
-    desc: '用 Claude Code 從規格到上線，快速做出能實際使用的網站。',
-    tags: ['活動網站', '產品驗證'],
+    name: '產品規劃與規格',
+    desc: '幫你把想法整理成清楚的流程和規格，工程師拿到就能開發。',
+    tags: ['新產品', '需求整理', '規格文件'],
   },
 ];
 

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
-import { hasDetailPage } from '../../data/categories';
+import { hasDetailPage, splitTitle } from '../../data/categories';
 
 export async function getStaticPaths() {
   const all = (await getCollection('work'))
@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 
 const { entry, prev, next } = Astro.props;
 const d = entry.data;
+const { name, subtitle } = splitTitle(d.title);
 const { Content } = await render(entry);
 ---
 <Base title={d.title} description={d.summary} image={d.cover}>
@@ -23,7 +24,8 @@ const { Content } = await render(entry);
 
     <header class="case-head">
       <p class="kicker">{d.company ? `${d.company}・` : ''}{d.type}</p>
-      <h1>{d.title}</h1>
+      <h1>{name}</h1>
+      {subtitle && <p class="subtitle">{subtitle}</p>}
       <p class="summary">{d.summary}</p>
       <dl class="meta">
         <div><dt>期間</dt><dd>{d.period}</dd></div>
@@ -44,13 +46,13 @@ const { Content } = await render(entry);
 
     {d.cover && <figure class="cover glass"><img src={d.cover} alt={d.coverAlt} /></figure>}
 
-    <article class:list={["prose", "glass", { "show-todo": import.meta.env.DEV }]}>
+    <article class:list={["prose", "glass", { "show-todo": import.meta.env.DEV, compact: d.compactImages }]}>
       <Content />
     </article>
 
     <nav class="pager" aria-label="其他作品">
-      {prev ? <a class="glass" href={`/work/${prev.id}/`}><span>← 上一個</span><b>{prev.data.title}</b></a> : <span />}
-      {next ? <a class="glass next" href={`/work/${next.id}/`}><span>下一個 →</span><b>{next.data.title}</b></a> : <span />}
+      {prev ? <a class="glass" href={`/work/${prev.id}/`}><span>← 上一個</span><b>{splitTitle(prev.data.title).name}</b></a> : <span />}
+      {next ? <a class="glass next" href={`/work/${next.id}/`}><span>下一個 →</span><b>{splitTitle(next.data.title).name}</b></a> : <span />}
     </nav>
   </main>
 </Base>
@@ -62,7 +64,8 @@ const { Content } = await render(entry);
   .back:hover { color: var(--accent); }
   .case-head { max-width: 100%; }
   .kicker { font-size: 13px; letter-spacing: .12em; color: var(--muted); margin-bottom: 10px; }
-  h1 { font-size: clamp(30px, 5vw, 50px); line-height: 1.25; margin-bottom: 18px; }
+  h1 { font-size: clamp(30px, 5vw, 50px); line-height: 1.25; margin-bottom: 6px; }
+  .subtitle { font-size: clamp(18px, 2.4vw, 24px); font-weight: 500; opacity: .82; margin-bottom: 18px; }
   .summary { font-size: clamp(17px, 2vw, 20px); color: var(--muted); line-height: 1.7; }
   .meta { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 12px 40px; margin-top: 28px; }
   .meta dt { font-size: 12px; letter-spacing: .15em; color: var(--faint); }
@@ -85,8 +88,10 @@ const { Content } = await render(entry);
   .prose :global(ul), .prose :global(ol) { padding-left: 1.3em; margin-bottom: 14px; }
   .prose :global(li) { margin: 4px 0; }
   .prose :global(strong) { font-weight: 700; }
+  .prose :global(blockquote) { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 2px solid var(--accent); font-style: italic; color: var(--muted); }
   .prose :global(a) { color: var(--fg); text-decoration-color: var(--accent); text-underline-offset: 3px; }
   .prose :global(img) { width: 100%; height: auto; margin: 28px 0; border-radius: 14px; border: 1px solid var(--line); }
+  .prose.compact :global(img) { max-width: 520px; margin: 24px auto; display: block; }
   .prose :global(table) { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 15px; }
   .prose :global(th), .prose :global(td) { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
   .prose :global(th) { font-size: 13px; color: var(--muted); font-weight: 600; }
