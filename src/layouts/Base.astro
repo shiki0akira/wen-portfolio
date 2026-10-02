@@ -26,7 +26,8 @@ const L = (p: string) => localize(lang, p);
 
 // Share titles use the brand name only (no full name): "WEN．UI/UX Designer & Product Planner".
 const brand = `WEN．${profile.title}`;
-const fullTitle = title ? `${title}｜WEN` : brand;
+// Inner pages: "Page name｜WEN · UI/UX & Product".
+const fullTitle = title ? `${title}｜WEN · UI/UX & Product` : brand;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // Current path without the live site's base ("/wen-portfolio") or the "/en" prefix,

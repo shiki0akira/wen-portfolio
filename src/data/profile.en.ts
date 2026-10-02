@@ -10,7 +10,7 @@ export const profile = {
   proofs: [
     { ability: 'Product experience across industries', value: 6, suffix: '', unit: 'years', desc: 'E-commerce, B2B SaaS, AI, fintech and industrial equipment', href: '/experience/', cta: 'See experience' },
     { ability: 'Projects delivered', value: 'works', suffix: '', unit: 'projects', desc: 'In-house products, side projects, freelance and competitions', href: '/work/', cta: 'See work' },
-    { ability: 'Owning product results', value: 500, suffix: '+', unit: 'merchants', desc: 'On BIRSE, earning US$30K+ in annual recurring revenue', href: '/work/birse/', cta: 'Read case' },
+    { ability: 'Owning product results', value: 500, suffix: '+', unit: 'clients', desc: 'E-commerce clients on BIRSE, earning US$30K+ in annual recurring revenue', href: '/work/birse/', cta: 'Read case' },
     { ability: 'Shipping fast with AI', value: 800, suffix: '+', unit: 'users', desc: 'On Web100, six products I built with AI', href: '/work/web100/', cta: 'Read case' },
   ],
 };
@@ -48,7 +48,7 @@ export const experience: Job[] = [
           'Proposed and secured the official Built for Shopify certification, reworking the product to meet the requirements',
           'Designed image search for fashion and furniture stores, so shoppers find what they want faster',
           'Later owned the product end to end, including back-office settings and customer issues',
-          '500+ merchants and US$30K+ in annual recurring revenue',
+          '500+ e-commerce clients and US$30K+ in annual recurring revenue',
         ],
       },
       {
@@ -188,7 +188,7 @@ export const about: AboutSection[] = [
   {
     heading: 'Products I have built',
     body: [
-      "At BigGo I led BIRSE, a Shopify app that grew to 500+ merchants and US$30K+ in annual recurring revenue, earning Shopify's official Built for Shopify badge. Recent work also includes leading 0-to-1 design for OAPhub, an AI agent platform, and UI/UX for enterprise SaaS products such as a price monitoring system adopted by LG and Carrefour Taiwan.",
+      "At BigGo I led BIRSE, a Shopify app that grew to 500+ e-commerce clients and US$30K+ in annual recurring revenue, earning Shopify's official Built for Shopify badge. Recent work also includes leading 0-to-1 design for OAPhub, an AI agent platform, and UI/UX for enterprise SaaS products such as a price monitoring system adopted by LG and Carrefour Taiwan.",
     ],
   },
   {
