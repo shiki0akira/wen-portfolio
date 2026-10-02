@@ -117,8 +117,9 @@ export const experience: Job[] = [
     period: '2019/8 — 2020/4',
     duration: '9 mos',
     title: 'Product Designer',
-    company: 'Chi Jin Kiln',
-    meta: 'Ceramics',
+    company: '1300 Porcelain',
+    companyUrl: 'https://www.1300porcelain.com/',
+    meta: 'Premium porcelain brand',
     summary: 'Physical product design and large-scale art installations.',
     projects: [
       { name: 'Art installations', points: ['Coordinated between designers, manufacturers and the on-site team'] },

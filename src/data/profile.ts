@@ -33,6 +33,8 @@ export type Job = {
   duration?: string;
   title: string;
   company: string;
+  // Optional link to the company or brand site.
+  companyUrl?: string;
   meta: string;
   summary: string;
   projects: Project[];
@@ -142,7 +144,8 @@ export const experience: Job[] = [
     duration: '9 個月',
     title: '產品設計師',
     company: '旗津窯文化藝術股份有限公司',
-    meta: '陶瓷製品製造業',
+    companyUrl: 'https://www.1300porcelain.com/',
+    meta: '陶瓷製品製造業・品牌 1300',
     summary: '實體產品設計，以及大型裝置藝術專案。',
     projects: [
       { name: '裝置藝術專案', points: ['協調設計、製造廠商與施工現場三方溝通'] },

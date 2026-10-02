@@ -13,7 +13,7 @@ const { experience } = data[lang];
       </div>
       <div class="what">
         <h3>{job.title}</h3>
-        <p class="company">{job.company}<span>{job.meta}</span></p>
+        <p class="company">{job.companyUrl ? <a href={job.companyUrl} target="_blank" rel="noopener">{job.company} <span aria-hidden="true">↗</span></a> : job.company}<span>{job.meta}</span></p>
         <p class="summary">{job.summary}</p>
         {job.projects.map(p => (
           <div class="project">
@@ -36,7 +36,10 @@ const { experience } = data[lang];
   .when span { font-size: 13px; color: var(--faint); }
   h3 { font-size: 20px; line-height: 1.4; }
   .company { color: var(--muted); font-size: 15px; margin-bottom: 10px; }
-  .company span { display: inline-block; margin-left: 10px; font-size: 13px; color: var(--faint); }
+  .company a { color: inherit; text-decoration: none; transition: color .2s; }
+  .company a:hover { color: var(--accent); }
+  .company a span { margin: 0; font-size: inherit; color: inherit; }
+  .company > span { display: inline-block; margin-left: 10px; font-size: 13px; color: var(--faint); }
   .summary { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
   .project { margin-top: 16px; padding-left: 14px; border-left: 2px solid var(--line); }
   h4 { font-size: 15.5px; margin-bottom: 4px; }
