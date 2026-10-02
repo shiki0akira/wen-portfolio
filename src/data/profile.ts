@@ -104,7 +104,7 @@ export const experience: Job[] = [
     title: 'UI/UX 設計師',
     company: '榮興自動化科技股份有限公司',
     meta: '自動控制相關業',
-    summary: '負責倉儲系統的改版。',
+    summary: '負責倉儲系統的改版，以及公司社群的節慶視覺。',
     projects: [
       {
         name: 'WMS 倉儲系統改版',
@@ -114,6 +114,7 @@ export const experience: Job[] = [
           '從零建立設計規範與元件庫，之後改版和開發都更快',
         ],
       },
+      { name: '品牌社群視覺', points: ['設計公司社群的節慶視覺，例如 2023 新年賀圖'] },
     ],
   },
   {
