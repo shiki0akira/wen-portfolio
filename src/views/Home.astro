@@ -78,7 +78,15 @@ const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured
 
 <script>
   const art = document.getElementById('heroArt');
-  const fade = () => { if (art) art.style.opacity = String(Math.max(0, 1 - scrollY / (innerHeight * 0.9))); };
+  const hero = document.querySelector<HTMLElement>('.hero');
+  const clamp = (v: number) => Math.max(0, Math.min(1, v));
+  // Dims to a faint 40% while WEN scatters and re-forms into the title, then fades out with the hero.
+  const fade = () => {
+    if (!art || !hero) return;
+    const H = innerHeight, release = (hero.offsetHeight - H) * 0.82;
+    const dim = 1 - 0.6 * clamp(scrollY / (H * 0.9));
+    art.style.opacity = String(dim * (1 - clamp((scrollY - release) / (H * 0.8))));
+  };
   addEventListener('scroll', fade, { passive: true });
   fade();
 </script>
