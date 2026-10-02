@@ -13,6 +13,7 @@ const all = await getWork(lang);
 const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured! - b.data.featured!);
 ---
 <Base lang={lang} field="hero">
+  <div class="hero-art" id="heroArt" aria-hidden="true"><img src="/images/home/painting.webp" alt="" /></div>
   <header class="hero" id="top">
     <h1 class="sr-only">{lang === 'zh' ? `${profile.nameZh} ` : ''}{profile.nameEn} — {profile.title}</h1>
     <div class="hero-stage">
@@ -75,7 +76,18 @@ const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured
   </main>
 </Base>
 
+<script>
+  const art = document.getElementById('heroArt');
+  const fade = () => { if (art) art.style.opacity = String(Math.max(0, 1 - scrollY / (innerHeight * 0.9))); };
+  addEventListener('scroll', fade, { passive: true });
+  fade();
+</script>
+
 <style>
+  /* Hand-drawn painting behind the particle WEN; fades out as the hero scrolls away. */
+  .hero-art { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transform: scale(1.12); filter: blur(2px); }
+  .hero-art::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, color-mix(in srgb, var(--bg) 70%, transparent), color-mix(in srgb, var(--bg) 94%, transparent)); }
   .hero { position: relative; height: 320vh; z-index: 1; }
   .hero-stage { position: sticky; top: 0; height: 100vh; }
   .hero-name { position: absolute; top: 108px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); text-align: center; font-size: 13px; letter-spacing: .25em; line-height: 1.9; color: var(--muted); }
