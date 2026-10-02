@@ -140,7 +140,8 @@ const nav = [
       .nav ul a[aria-current="page"] { color: var(--accent); background: var(--glass-strong); }
       .nav ul a.lang-btn { margin-left: 6px; padding: 0; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--glass-strong); color: var(--fg); font-family: "Noto Sans TC", sans-serif; font-size: 14px; font-weight: 300; letter-spacing: .02em; }
       .nav ul a.lang-btn:hover { border-color: var(--accent); }
-      .theme-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--glass-strong); color: var(--fg); cursor: pointer; display: grid; place-items: center; margin-left: 4px; }
+      .theme-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--glass-strong); color: var(--fg); cursor: pointer; display: grid; place-items: center; margin-left: 4px; transition: border-color .2s; }
+      .theme-btn:hover { border-color: var(--accent); }
       .theme-btn :global(svg) { width: 18px; height: 18px; }
       @media (max-width: 480px) {
         .brand span { display: none; }
