@@ -22,6 +22,8 @@ const {
 const brand = `WEN．${profile.title}`;
 const fullTitle = title ? `${title}｜WEN` : brand;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Current path without the live site's base ("/wen-portfolio"), so nav highlighting works locally and online.
+const path = '/' + Astro.url.pathname.replace(import.meta.env.BASE_URL, '').replace(/^\//, '');
 const nav = [
   { href: '/work/', label: '作品' },
   { href: '/services/', label: '合作' },
@@ -57,7 +59,7 @@ const nav = [
     <nav class="nav glass" aria-label="主選單">
       <a class="brand" href="/" aria-label="回到首頁"><Logo /><span>WEN</span><small class="role">UI/UX &amp; Product</small></a>
       <ul>
-        {nav.map(n => <li><a href={n.href} aria-current={Astro.url.pathname.startsWith(n.href) ? "page" : undefined}>{n.label}</a></li>)}
+        {nav.map(n => <li><a href={n.href} aria-current={path.startsWith(n.href) ? "page" : undefined}>{n.label}</a></li>)}
         <li><button class="theme-btn" id="themeBtn" type="button" aria-label="切換深淺色"></button></li>
       </ul>
     </nav>
