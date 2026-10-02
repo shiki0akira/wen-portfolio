@@ -10,7 +10,7 @@ export const profile = {
   proofs: [
     { ability: 'Product experience across industries', value: 6, suffix: '', unit: 'years', desc: 'E-commerce, B2B SaaS, AI, fintech and industrial equipment', href: '/experience/', cta: 'See experience' },
     { ability: 'Projects delivered', value: 'works', suffix: '', unit: 'projects', desc: 'In-house products, side projects, freelance and competitions', href: '/work/', cta: 'See work' },
-    { ability: 'Owning product results', value: 500, suffix: '+', unit: 'stores', desc: 'Merchants on BIRSE, with US$30K+ in annual recurring revenue', href: '/work/birse/', cta: 'Read case' },
+    { ability: 'Owning product results', value: 500, suffix: '+', unit: 'merchants', desc: 'On BIRSE, earning US$30K+ in annual recurring revenue', href: '/work/birse/', cta: 'Read case' },
     { ability: 'Shipping fast with AI', value: 800, suffix: '+', unit: 'users', desc: 'On Web100, six products I built with AI', href: '/work/web100/', cta: 'Read case' },
   ],
 };
