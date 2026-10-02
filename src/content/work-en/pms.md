@@ -43,4 +43,4 @@ With a large catalogue, the slowest part is working out which product is the com
 
 ## Results
 
-- Adopted by enterprise clients including **LG, Carrefour Taiwan, Chunghwa Post and Quaker**
+- Adopted by enterprise clients including **LG, Carrefour Taiwan, Chunghwa Post, Quaker, MedFirst and HuaHua Computer**
