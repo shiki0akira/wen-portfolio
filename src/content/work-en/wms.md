@@ -1,7 +1,7 @@
 ---
 title: "WMS: Warehouse System Redesign"
 summary: Redesigned a warehouse system that had been in development for a year, in just 2 months, and built its design system.
-company: Rong Xing Automation
+company: ROSATI
 role: UI/UX Designer (solo)
 type: B2B · Warehouse management system
 coverAlt: The WMS on desktop and mobile
@@ -10,7 +10,7 @@ tags: [B2B, Design system, Responsive, Information architecture]
 
 ## Overview
 
-This is Rong Xing Automation's warehouse management system. It handles receiving, shipping, inventory, storage locations and stock counts, and is used mainly by warehouse staff on the floor.
+This is the warehouse management system by ROSATI (Rong Shin Automation Technology). It handles receiving, shipping, inventory, storage locations and stock counts, and is used mainly by warehouse staff on the floor.
 
 ## The problem
 

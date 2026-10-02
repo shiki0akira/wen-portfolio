@@ -76,7 +76,7 @@ export const experience: Job[] = [
     period: '2022/9 — 2023/2',
     duration: '6 mos',
     title: 'UI/UX Designer',
-    company: 'Rong Xing Automation',
+    company: 'Rong Shin Automation Technology (ROSATI)',
     meta: 'Industrial automation',
     summary: 'Led the redesign of a warehouse management system.',
     projects: [
