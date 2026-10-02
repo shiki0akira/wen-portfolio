@@ -78,7 +78,7 @@ export const experience: Job[] = [
     title: 'UI/UX Designer',
     company: 'Rong Shin Automation Technology (ROSATI)',
     meta: 'Industrial automation',
-    summary: 'Led the redesign of a warehouse management system, and designed seasonal social media visuals.',
+    summary: 'Led the redesign of a warehouse management system, and designed the brand logo and social media visuals.',
     projects: [
       {
         name: 'WMS redesign',
@@ -88,7 +88,7 @@ export const experience: Job[] = [
           'Built a design system and component library from scratch, speeding up later updates',
         ],
       },
-      { name: 'Brand & social visuals', points: ['Designed seasonal social media visuals for the company, such as the 2023 Lunar New Year greetings'] },
+      { name: 'Brand visuals', points: ['Designed the ROSATI brand logo', 'Designed seasonal social media visuals for the company, such as the 2023 Lunar New Year greetings'] },
     ],
   },
   {
