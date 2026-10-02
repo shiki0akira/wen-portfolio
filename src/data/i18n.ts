@@ -79,7 +79,7 @@ export const ui = {
     home: 'Home',
     mainNav: 'Main menu',
     contactTitle: "Let's talk",
-    contactText: "Looking for help with a product, an interface, or anything else? I'd love to hear from you. Available for remote work.",
+    contactText: "Let's talk about how I can help your product grow. Available for remote work.",
     contactCta: 'Get in touch',
     footPages: 'Pages',
     footWork: 'Work',

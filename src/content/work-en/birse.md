@@ -1,6 +1,6 @@
 ---
 title: "BIRSE: Shopify Visual Search App"
-summary: A Shopify search app that lets shoppers find products with images. Built for Shopify certified, with 500+ e-commerce clients and NT$1M+ in annual revenue.
+summary: A Shopify search app that lets shoppers find products with images. Built for Shopify certified, with 500+ merchants and US$30K+ in annual recurring revenue.
 role: Product lead (UX, product rules, customer issues)
 type: B2B SaaS · Shopify App
 coverAlt: BIRSE on the Shopify App Store, with the Built for Shopify badge
@@ -8,7 +8,7 @@ tags: [B2B SaaS, Product ownership, Built for Shopify, Conversion]
 metrics:
   - { value: "500+", label: E-commerce clients }
   - { value: "100+", label: Installs in year one }
-  - { value: "NT$1M+", label: Annual revenue }
+  - { value: "US$30K+", label: Annual recurring revenue }
 ---
 
 ## Overview
@@ -65,5 +65,5 @@ A store selling products with French names shared:
 
 - Earned Shopify's **Built for Shopify** certification and an official recommendation
 - **100+** stores installed it in the first year; **500+** e-commerce clients in total
-- **NT$1M+** in annual revenue
+- **US$30K+** in annual recurring revenue
 - Shorter path from search to product, helping merchants raise **conversion**

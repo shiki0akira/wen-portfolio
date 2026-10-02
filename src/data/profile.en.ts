@@ -10,7 +10,7 @@ export const profile = {
   proofs: [
     { ability: 'Product experience across industries', value: 6, suffix: '', unit: 'years', desc: 'E-commerce, B2B SaaS, AI, fintech and industrial equipment', href: '/experience/', cta: 'See experience' },
     { ability: 'Projects delivered', value: 'works', suffix: '', unit: 'projects', desc: 'In-house products, side projects, freelance and competitions', href: '/work/', cta: 'See work' },
-    { ability: 'Owning product results', value: 500, suffix: '+', unit: 'stores', desc: 'E-commerce clients on BIRSE, NT$1M+ in annual revenue', href: '/work/birse/', cta: 'Read case' },
+    { ability: 'Owning product results', value: 500, suffix: '+', unit: 'stores', desc: 'Merchants on BIRSE, with US$30K+ in annual recurring revenue', href: '/work/birse/', cta: 'Read case' },
     { ability: 'Shipping fast with AI', value: 800, suffix: '+', unit: 'users', desc: 'On Web100, six products I built with AI', href: '/work/web100/', cta: 'Read case' },
   ],
 };
@@ -48,7 +48,7 @@ export const experience: Job[] = [
           'Proposed and secured the official Built for Shopify certification, reworking the product to meet the requirements',
           'Designed image search for fashion and furniture stores, so shoppers find what they want faster',
           'Later owned the product end to end, including back-office settings and customer issues',
-          '500+ e-commerce clients and NT$1M+ in annual revenue',
+          '500+ merchants and US$30K+ in annual recurring revenue',
         ],
       },
       {
@@ -182,22 +182,22 @@ export const about: AboutSection[] = [
   {
     heading: 'About me',
     body: [
-      "I'm Pin Wen Zhang (Wen), a UI/UX designer and product planner with 6 years of experience. I've worked on products in e-commerce, B2B SaaS, AI, fintech and industrial equipment. From shaping requirements and designing the interface to shipping the site with AI, I can take on the whole journey with you.",
+      "I'm Pin Wen Zhang (Wen), a freelance UI/UX designer with 6+ years of experience in B2B and B2C SaaS. I've worked remotely with clients across many industries, helping them design and ship products that solve real business problems.",
     ],
   },
   {
     heading: 'Products I have built',
     body: [
-      'At BigGo I led BIRSE, a Shopify app that earned the official Built for Shopify certification and grew to 500+ e-commerce clients. I also designed a price monitoring system adopted by LG and Carrefour Taiwan, and redesigned a warehouse system in 2 months after a year of development.',
+      "At BigGo I led BIRSE, a Shopify app that grew to 500+ merchants and US$30K+ in annual recurring revenue, earning Shopify's official Built for Shopify badge. Recent work also includes leading 0-to-1 design for OAPhub, an AI agent platform, and UI/UX for enterprise SaaS products such as a price monitoring system adopted by LG and Carrefour Taiwan.",
     ],
   },
   {
     heading: 'What you can expect',
     points: [
-      { title: 'Understand first, then design', text: 'I start by clarifying your users and the problem to solve, so every screen has a reason to exist.' },
+      { title: 'Research-backed decisions', text: 'Design decisions grounded in research and clear logic, which means fewer rounds of revisions and projects that stay on schedule.' },
       { title: 'Designs engineers can build right away', text: 'Flows, specs and components are clearly documented to cut back-and-forth. I know front-end too, so I can talk directly with your engineers.' },
-      { title: 'Faster with AI', text: 'With Claude Code I take projects from spec to launch; my first product shipped in 4 evenings. Great for testing ideas quickly.' },
-      { title: 'Smooth remote collaboration', text: 'Nearly two years of fully remote work. I collaborate in Figma and GitHub, share regular updates and iterate on feedback.' },
+      { title: 'AI in my workflow', text: 'I bring AI tools like Claude Code into my workflow to deliver more value, faster. My first product went from spec to launch in 4 evenings.' },
+      { title: 'Independent and remote-ready', text: 'Comfortable working autonomously, with nearly two years of fully remote experience. I collaborate in Figma and GitHub and share regular updates.' },
     ],
   },
 ];
