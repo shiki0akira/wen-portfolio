@@ -1,5 +1,8 @@
 ---
-import { experience } from '../data/profile';
+import { data, localize, type Lang } from '../data/i18n';
+interface Props { lang?: Lang; }
+const { lang = 'zh' } = Astro.props;
+const { experience } = data[lang];
 ---
 <ol class="timeline">
   {experience.map(job => (
@@ -15,7 +18,7 @@ import { experience } from '../data/profile';
         {job.projects.map(p => (
           <div class="project">
             <h4>
-              {p.work ? <a href={`/work/${p.work}/`}>{p.name} <span aria-hidden="true">→</span></a> : p.name}
+              {p.work ? <a href={localize(lang, `/work/${p.work}/`)}>{p.name} <span aria-hidden="true">→</span></a> : p.name}
             </h4>
             <ul>{p.points.map(pt => <li>{pt}</li>)}</ul>
           </div>

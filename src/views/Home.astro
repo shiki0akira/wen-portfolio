@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { getWork } from '../data/work';
+import { data, ui, localize, type Lang } from '../data/i18n';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = ui[lang];
+const { profile, services, experience } = data[lang];
+const L = (p: string) => localize(lang, p);
+const all = await getWork(lang);
+const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured! - b.data.featured!);
+---
+<Base lang={lang} field="hero">
+  <header class="hero" id="top">
+    <h1 class="sr-only">{lang === 'zh' ? `${profile.nameZh} ` : ''}{profile.nameEn} — {profile.title}</h1>
+    <div class="hero-stage">
+      <div class="hero-name" id="heroName">{lang === 'zh' ? `${profile.nameZh} ` : ''}{profile.nameEn.toUpperCase()}<span class="sep">｜</span>{t.heroPortfolio}</div>
+      <p class="hero-motto" id="heroMotto">{profile.motto}</p>
+      <p class="hero-sub" id="heroSub">{profile.tagline}</p>
+      <div class="hero-hint" id="heroHint">Scroll<span class="arrow"></span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="block">
+      <div class="intro glass reveal">
+        <p class="lead">{t.intro}</p>
+        <div class="status">
+          <span class="chip dot">{profile.status}</span>
+          <span class="chip">{profile.location}</span>
+        </div>
+        <div class="proofs">
+          {profile.proofs.map(p => (
+            <a class="proof" href={L(p.href)}>
+              <h3>{p.ability}</h3>
+              <p class="num"><b data-count={p.value === 'works' ? all.length : p.value} data-suffix={p.suffix}>0</b>{p.unit && <span class="unit">{p.unit}</span>}</p>
+              <p class="desc">{p.desc}</p>
+              <span class="go">{p.cta} <span aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="head reveal">
+        <div><div class="eyebrow">Selected Work</div><h2 class="section-title">{t.featured}</h2></div>
+        <a class="btn" href={L('/work/')}>{t.allWorks(all.length)} <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="works">
+        {featured.map(w => <WorkCard entry={w} lang={lang} />)}
+      </div>
+    </section>
+
+    <section class="block split">
+      <a class="teaser glass reveal" href={L('/services/')}>
+        <div class="eyebrow">Work with me</div>
+        <h2>{t.servicesTitle}</h2>
+        <ul class="mini">{services.map(s => <li>{s.name}</li>)}</ul>
+        <span class="go">{t.servicesMore} <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="teaser glass reveal" href={L('/experience/')}>
+        <div class="eyebrow">Experience</div>
+        <h2>{t.experienceTitle}</h2>
+        <ul class="jobs">
+          {experience.map(j => (
+            <li><time>{j.period.split(' — ')[0].split('/')[0]}</time><div><b>{j.title}</b><span>{j.company}</span></div></li>
+          ))}
+        </ul>
+        <span class="go">{t.experienceMore} <span aria-hidden="true">→</span></span>
+      </a>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .hero { position: relative; height: 320vh; z-index: 1; }
+  .hero-stage { position: sticky; top: 0; height: 100vh; }
+  .hero-name { position: absolute; top: 108px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); text-align: center; font-size: 13px; letter-spacing: .25em; line-height: 1.9; color: var(--muted); }
+  .hero-name .sep { margin: 0 .6em; opacity: .5; }
+  @media (max-width: 640px) { .hero-name { font-size: 12px; letter-spacing: .15em; } .hero-name .sep { display: block; height: 0; overflow: hidden; } }
+  .hero-motto, .hero-sub { position: absolute; left: 50%; transform: translateX(-50%); width: min(640px, calc(100% - 32px)); text-align: center; }
+  .hero-motto { font-style: italic; font-weight: 300; font-size: clamp(15px, 1.8vw, 19px); color: var(--muted); letter-spacing: .02em; }
+  .hero-sub { font-size: clamp(16px, 2.2vw, 22px); font-weight: 500; opacity: 0; }
+  .hero-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); font-size: 13px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; text-align: center; }
+  .hero-hint .arrow { display: block; margin: 8px auto 0; width: 1px; height: 36px; background: linear-gradient(var(--muted), transparent); animation: drop 1.8s ease-in-out infinite; }
+  @keyframes drop { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  .intro { padding: clamp(28px, 5vw, 56px); }
+  .lead { font-size: clamp(20px, 2.8vw, 28px); line-height: 1.55; font-weight: 500; max-width: 24em; }
+  .status { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .proofs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+  .proof { display: flex; flex-direction: column; padding: 20px 4px 4px; border-top: 1px solid var(--line); text-decoration: none; transition: border-color .3s; }
+  .proof:hover { border-top-color: var(--accent); }
+  .proof h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .num { display: flex; align-items: baseline; gap: 6px; }
+  .num b { font-size: clamp(36px, 4.5vw, 52px); font-weight: 300; font-family: Inter, sans-serif; letter-spacing: -.02em; line-height: 1.1; }
+  .unit { font-size: 16px; color: var(--muted); }
+  .desc { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .proof .go { margin-top: 14px; font-size: 13px; color: var(--faint); transition: color .2s; }
+  .proof:hover .go { color: var(--accent); }
+  @media (max-width: 900px) { .proofs { grid-template-columns: 1fr 1fr; gap: 8px 16px; } }
+  @media (max-width: 420px) { .proofs { grid-template-columns: 1fr; } }
+
+  .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .head .section-title { margin-bottom: 0; }
+  /* 3 on top, 2 centred below, all the same width: a 6-column grid where each card spans 2. */
+  .works { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .works > :global(.work) { grid-column: span 2; }
+  .works > :global(.work:nth-child(4)) { grid-column: 2 / span 2; }
+  @media (max-width: 960px) {
+    .works { grid-template-columns: 1fr 1fr; }
+    .works > :global(.work), .works > :global(.work:nth-child(4)) { grid-column: auto; }
+  }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .teaser { display: flex; flex-direction: column; padding: clamp(24px, 4vw, 40px); text-decoration: none; transition: border-color .3s, transform .3s; }
+  .teaser:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .teaser h2 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 18px; }
+  .mini, .jobs { list-style: none; margin-bottom: 24px; }
+  .mini li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
+  .jobs li { display: flex; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15px; }
+  .jobs time { width: 44px; flex: none; color: var(--faint); font-family: Inter, sans-serif; }
+  .jobs b { display: block; font-weight: 500; }
+  .jobs li span { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .go { margin-top: auto; font-size: 14px; color: var(--muted); }
+  .teaser:hover .go { color: var(--accent); }
+  @media (max-width: 760px) { .works, .split { grid-template-columns: 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) { .hero-hint .arrow { animation: none; } }
+</style>

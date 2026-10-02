@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { getWork } from '../data/work';
+import { data, ui, type Lang } from '../data/i18n';
+
+interface Props { lang: Lang; description: string; }
+const { lang, description } = Astro.props;
+const t = ui[lang];
+const { profile, services, process } = data[lang];
+const mail = `mailto:${profile.email}?subject=${encodeURIComponent(t.mailSubject)}`;
+const examples = (await getWork(lang)).filter(w => w.data.category === '接案作品');
+---
+<Base lang={lang} title={t.servicesTitle} description={description}>
+  <main class="wrap page">
+    <div class="eyebrow">Work with me</div>
+    <h1>{t.servicesTitle}</h1>
+    <p class="lead">{t.servicesLead}</p>
+    <a class="btn primary" href={mail}>{t.servicesCta} <span aria-hidden="true">→</span></a>
+
+    <section>
+      <h2>{t.servicesList}</h2>
+      <div class="services">
+        {services.map((s, i) => (
+          <div class="service glass reveal">
+            <span class="num">0{i + 1}</span>
+            <h3>{s.name}</h3>
+            <p>{s.desc}</p>
+            <div class="tags">{s.tags.map(t => <span class="tag">{t}</span>)}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2>{t.processTitle}</h2>
+      <ol class="process glass reveal">
+        {process.map((p, i) => (
+          <li><b><span>{i + 1}</span>{p.step}</b><p>{p.desc}</p></li>
+        ))}
+      </ol>
+    </section>
+
+    <section>
+      <h2>{t.pastClients}</h2>
+      <div class="grid">
+        {examples.map(w => <WorkCard entry={w} size="small" lang={lang} />)}
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: 140px; position: relative; z-index: 1; }
+  h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.2; margin-bottom: 16px; }
+  .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 36em; margin-bottom: 24px; }
+  section { margin-top: 72px; }
+  h2 { font-size: 22px; margin-bottom: 20px; }
+  .services { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .service { padding: 26px 26px 24px; }
+  .num { font-family: Inter, sans-serif; font-size: 13px; color: var(--accent); letter-spacing: .1em; }
+  .service h3 { font-size: 19px; margin: 6px 0 10px; }
+  .service p { font-size: 14.5px; color: var(--muted); }
+  .service .tags { margin-top: 20px; gap: 8px; }
+  .process { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px; }
+  .process li { padding: 18px 20px; }
+  .process li + li { border-left: 1px solid var(--line); }
+  .process b { display: flex; align-items: center; gap: 10px; font-size: 15.5px; }
+  .process b span { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-family: Inter, sans-serif; background: var(--fg); color: var(--bg); }
+  .process p { font-size: 13.5px; color: var(--muted); margin-top: 6px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .more { display: inline-block; margin-top: 20px; font-size: 14px; color: var(--muted); text-decoration: none; }
+  .more:hover { color: var(--accent); }
+  @media (max-width: 760px) {
+    .services, .grid { grid-template-columns: 1fr; }
+    .process { grid-template-columns: 1fr 1fr; }
+    .process li + li { border-left: 0; }
+  }
+</style>

@@ -3,48 +3,62 @@ import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import ParticleField from '../components/ParticleField.astro';
 import Social from '../components/Social.astro';
-import { profile } from '../data/profile';
 import { categories } from '../data/categories';
+import { data, ui, localize, categoryLabel, type Lang } from '../data/i18n';
 
 interface Props {
+  lang?: Lang;
   title?: string;
   description?: string;
   field?: 'hero' | 'ambient';
   image?: string;
 }
 const {
+  lang = 'zh',
   title,
   description = "UI/UX Designer & Product Planner. I turn fuzzy ideas into clear specs and shipped products, from UX design to AI-assisted builds.",
   field = 'ambient',
   image = '/og.png',
 } = Astro.props;
+const t = ui[lang];
+const { profile } = data[lang];
+const L = (p: string) => localize(lang, p);
+
 // Share titles use the brand name only (no full name): "WEN．UI/UX Designer & Product Planner".
 const brand = `WEN．${profile.title}`;
 const fullTitle = title ? `${title}｜WEN` : brand;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-// Current path without the live site's base ("/wen-portfolio"), so nav highlighting works locally and online.
-const path = '/' + Astro.url.pathname.replace(import.meta.env.BASE_URL, '').replace(/^\//, '');
+
+// Current path without the live site's base ("/wen-portfolio") or the "/en" prefix,
+// so nav highlighting and the language switch work locally and online.
+const path = ('/' + Astro.url.pathname.replace(import.meta.env.BASE_URL, '').replace(/^\//, '')).replace(/^\/en(?=\/|$)/, '') || '/';
+const other: Lang = lang === 'zh' ? 'en' : 'zh';
+const alternates = { zh: path, en: localize('en', path) };
+const siteUrl = (p: string) => new URL(import.meta.env.BASE_URL.replace(/\/$/, '') + p, Astro.site);
+
 const nav = [
-  { href: '/work/', label: '作品' },
-  { href: '/services/', label: '合作' },
-  { href: '/experience/', label: '經歷' },
-  { href: '/about/', label: '關於我' },
+  { href: '/work/', label: t.nav.work },
+  { href: '/services/', label: t.nav.services },
+  { href: '/experience/', label: t.nav.experience },
+  { href: '/about/', label: t.nav.about },
 ];
 ---
 <!doctype html>
-<html lang="zh-Hant">
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-Hant" href={siteUrl(alternates.zh)} />
+    <link rel="alternate" hreflang="en" href={siteUrl(alternates.en)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL(import.meta.env.BASE_URL.replace(/\/$/, '') + image, Astro.site)} />
+    <meta property="og:image" content={siteUrl(image)} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,11 +70,12 @@ const nav = [
   <body>
     <ParticleField mode={field} />
 
-    <nav class="nav glass" aria-label="主選單">
-      <a class="brand" href="/" aria-label="回到首頁"><Logo /><span>WEN</span><small class="role">UI/UX &amp; Product</small></a>
+    <nav class="nav glass" aria-label={t.mainNav}>
+      <a class="brand" href={L('/')} aria-label={t.home}><Logo /><span>WEN</span><small class="role">UI/UX &amp; Product</small></a>
       <ul>
-        {nav.map(n => <li><a href={n.href} aria-current={path.startsWith(n.href) ? "page" : undefined}>{n.label}</a></li>)}
-        <li><button class="theme-btn" id="themeBtn" type="button" aria-label="切換深淺色"></button></li>
+        {nav.map(n => <li><a href={L(n.href)} aria-current={path.startsWith(n.href) ? "page" : undefined}>{n.label}</a></li>)}
+        <li><a class="lang-btn" href={alternates[other]} hreflang={other === 'en' ? 'en' : 'zh-Hant'} aria-label={t.switchLabel}>{t.switchTo}</a></li>
+        <li><button class="theme-btn" id="themeBtn" type="button" aria-label={t.themeLabel}></button></li>
       </ul>
     </nav>
 
@@ -68,36 +83,36 @@ const nav = [
 
     <section class="contact glass reveal" id="contact">
       <div class="eyebrow">Contact</div>
-      <h2>一起聊聊？</h2>
-      <p>想找人一起做產品、設計介面，或有任何合作機會，都歡迎來信。可遠端合作。</p>
-      <a class="btn primary" href={`mailto:${profile.email}`}>與我聯絡 <span aria-hidden="true">→</span></a>
+      <h2>{t.contactTitle}</h2>
+      <p>{t.contactText}</p>
+      <a class="btn primary" href={`mailto:${profile.email}`}>{t.contactCta} <span aria-hidden="true">→</span></a>
     </section>
 
     <footer class="site-footer">
       <div class="foot-grid">
         <div class="foot-brand">
-          <a class="brand" href="/" aria-label="回到首頁"><Logo /><span>WEN</span></a>
-          <p class="foot-name">{profile.nameZh}・{profile.nameEn}</p>
+          <a class="brand" href={L('/')} aria-label={t.home}><Logo /><span>WEN</span></a>
+          <p class="foot-name">{lang === 'zh' ? `${profile.nameZh}・${profile.nameEn}` : profile.nameEn}</p>
           <p class="foot-title">{profile.title}</p>
           <p class="foot-motto">{profile.motto}</p>
         </div>
-        <nav class="foot-nav" aria-label="頁尾選單">
-          <h3>頁面</h3>
+        <nav class="foot-nav" aria-label={t.footPages}>
+          <h3>{t.footPages}</h3>
           <ul>
-            <li><a href="/work/">全部作品</a></li>
-            <li><a href="/services/">接案合作</a></li>
-            <li><a href="/experience/">經歷</a></li>
-            <li><a href="/about/">關於我</a></li>
+            <li><a href={L('/work/')}>{t.footLinks.work}</a></li>
+            <li><a href={L('/services/')}>{t.footLinks.services}</a></li>
+            <li><a href={L('/experience/')}>{t.footLinks.experience}</a></li>
+            <li><a href={L('/about/')}>{t.footLinks.about}</a></li>
           </ul>
         </nav>
-        <nav class="foot-nav" aria-label="作品分類">
-          <h3>作品</h3>
+        <nav class="foot-nav" aria-label={t.footWork}>
+          <h3>{t.footWork}</h3>
           <ul>
-            {categories.map(c => <li><a href={`/work/?c=${encodeURIComponent(c)}`}>{c}</a></li>)}
+            {categories.map(c => <li><a href={`${L('/work/')}?c=${encodeURIComponent(c)}`}>{categoryLabel(lang, c)}</a></li>)}
           </ul>
         </nav>
         <div class="foot-contact">
-          <h3>聯絡</h3>
+          <h3>{t.footContact}</h3>
           <Social />
         </div>
       </div>
@@ -122,12 +137,17 @@ const nav = [
       .nav ul a { text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 999px; color: var(--muted); transition: color .2s, background .2s; white-space: nowrap; }
       .nav ul a:hover { color: var(--accent); background: var(--glass-strong); }
       .nav ul a[aria-current="page"] { color: var(--accent); background: var(--glass-strong); }
+      .nav ul a.lang-btn { margin-left: 6px; padding: 0; width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--glass-strong); color: var(--fg); font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+      .nav ul a.lang-btn:hover { border-color: var(--accent); }
       .theme-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--glass-strong); color: var(--fg); cursor: pointer; display: grid; place-items: center; margin-left: 4px; }
       .theme-btn :global(svg) { width: 18px; height: 18px; }
       @media (max-width: 480px) {
         .brand span { display: none; }
         .nav { padding-left: 14px; }
-        .nav ul a { padding: 6px 9px; }
+        .nav ul { gap: 0; }
+        .nav ul a { padding: 6px 5px; font-size: 12.5px; }
+        .nav ul a.lang-btn { width: 32px; height: 32px; margin-left: 2px; }
+        .theme-btn { width: 32px; height: 32px; margin-left: 2px; }
       }
       .contact { position: relative; z-index: 1; width: var(--wrap); margin: 64px auto 0; padding: clamp(36px, 6vw, 64px) 24px; text-align: center; }
       .contact .eyebrow { justify-content: center; }
@@ -163,6 +183,13 @@ const nav = [
       });
       matchMedia('(prefers-color-scheme: light)').addEventListener('change', paint);
       paint();
+
+      // Keep the work filter (?c=...) when switching language.
+      document.querySelector<HTMLAnchorElement>('.lang-btn')?.addEventListener('click', e => {
+        if (!location.search) return;
+        e.preventDefault();
+        location.href = (e.currentTarget as HTMLAnchorElement).href + location.search;
+      });
 
       // Reveal on scroll + count-up numbers
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

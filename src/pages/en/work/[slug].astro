@@ -1,0 +1,6 @@
+---
+import Case from '../../../views/Case.astro';
+import { getCasePaths } from '../../../data/work';
+export const getStaticPaths = () => getCasePaths('en');
+---
+<Case {...Astro.props} />

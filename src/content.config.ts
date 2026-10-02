@@ -3,6 +3,9 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { categories } from './data/categories';
 
+const metric = z.object({ value: z.string(), label: z.string() });
+const link = z.object({ label: z.string(), href: z.string() });
+
 const work = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/work' }),
   schema: z.object({
@@ -21,9 +24,27 @@ const work = defineCollection({
     featured: z.number().optional(),
     // Show in-article images smaller (e.g. pages with many tall design boards).
     compactImages: z.boolean().default(false),
-    metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
-    links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+    metrics: z.array(metric).default([]),
+    links: z.array(link).default([]),
   }),
 });
 
-export const collections = { work };
+// English translations, matched to `work` by file name. Only text fields; anything left out
+// (order, cover, category, featured...) comes from the Chinese entry.
+const workEn = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/work-en' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    period: z.string().optional(),
+    role: z.string(),
+    company: z.string().optional(),
+    type: z.string(),
+    coverAlt: z.string().optional(),
+    tags: z.array(z.string()),
+    metrics: z.array(metric).optional(),
+    links: z.array(link).optional(),
+  }),
+});
+
+export const collections = { work, workEn };

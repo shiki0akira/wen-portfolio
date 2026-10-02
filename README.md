@@ -11,4 +11,6 @@ npm run build   # 建置到 dist/
 ```
 
 - 作品內容：`src/content/work/*.md`
-- 個人資料、經歷、服務：`src/data/profile.ts`
+- 個人資料、經歷、服務：`src/data/profile.ts`（英文：`profile.en.ts`）
+- 英文作品內容：`src/content/work-en/*.md`（只需寫文字欄位，其餘沿用中文檔）
+- 介面文字：`src/data/i18n.ts`；英文網址在 `/en/` 底下

@@ -1,8 +1,10 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { hasDetailPage, splitTitle } from '../data/categories';
-interface Props { entry: CollectionEntry<'work'>; size?: 'large' | 'small'; }
-const { entry, size = 'large' } = Astro.props;
+import { ui, localize, type Lang } from '../data/i18n';
+import type { WorkItem } from '../data/work';
+interface Props { entry: WorkItem; size?: 'large' | 'small'; lang?: Lang; }
+const { entry, size = 'large', lang = 'zh' } = Astro.props;
+const t = ui[lang];
 const d = entry.data;
 const { name, subtitle } = splitTitle(d.title);
 // Cards show years only ("2024/6 — 2026/1" -> "2024 — 2026"); a same-year range collapses to one year.
@@ -10,7 +12,7 @@ const [from, to] = (d.period ?? '').replace(/\/\d+/g, '').split(' — ');
 const years = !to || from === to ? from : `${from} — ${to}`;
 // Link to the detail page if there is one; otherwise to the project's public site; otherwise no link.
 const detail = hasDetailPage(d.category);
-const href = detail ? `/work/${entry.id}/` : d.links[0]?.href;
+const href = detail ? localize(lang, `/work/${entry.id}/`) : d.links[0]?.href;
 const external = !detail && !!href;
 const Tag = href ? 'a' : 'div';
 ---
@@ -31,7 +33,7 @@ const Tag = href ? 'a' : 'div';
     {subtitle && <p class="subtitle">{subtitle}</p>}
     <p class="summary">{d.summary}</p>
     {size === 'large' && <div class="tags">{d.tags.slice(0, 3).map(t => <span class="tag">{t}</span>)}</div>}
-    {href && <span class="more">{external ? '前往網站' : '看案例'} <span aria-hidden="true">{external ? '↗' : '→'}</span></span>}
+    {href && <span class="more">{external ? t.visitSite : t.readCase} <span aria-hidden="true">{external ? '↗' : '→'}</span></span>}
   </div>
 </Tag>
 

@@ -1,0 +1,121 @@
+// Languages: Chinese lives at the site root, English under /en/.
+import * as zhData from './profile';
+import * as enData from './profile.en';
+import { categories } from './categories';
+
+export type Lang = 'zh' | 'en';
+export const langs: Lang[] = ['zh', 'en'];
+
+export const data = { zh: zhData, en: enData };
+
+// Prefix a root-relative site path for the given language: localize('en', '/work/') -> '/en/work/'.
+export const localize = (lang: Lang, path: string) => (lang === 'en' ? `/en${path}` : path);
+
+// Display names for work categories (the Chinese name is the stored key).
+const categoryNames: Record<(typeof categories)[number], string> = {
+  正職專案: 'In-house products',
+  個人產品: 'Side projects',
+  接案作品: 'Freelance',
+  競賽與學生作品: 'Competitions & school',
+};
+export const categoryLabel = (lang: Lang, c: string) =>
+  lang === 'en' ? categoryNames[c as keyof typeof categoryNames] ?? c : c;
+
+export const ui = {
+  zh: {
+    htmlLang: 'zh-Hant',
+    nav: { work: '作品', services: '合作', experience: '經歷', about: '關於我' },
+    switchTo: 'EN',
+    switchLabel: 'Switch to English',
+    themeLabel: '切換深淺色',
+    home: '回到首頁',
+    mainNav: '主選單',
+    contactTitle: '一起聊聊？',
+    contactText: '想找人一起做產品、設計介面，或有任何合作機會，都歡迎來信。可遠端合作。',
+    contactCta: '與我聯絡',
+    footPages: '頁面',
+    footWork: '作品',
+    footContact: '聯絡',
+    footLinks: { work: '全部作品', services: '接案合作', experience: '經歷', about: '關於我' },
+    heroPortfolio: 'UI/UX & PRODUCT PORTFOLIO',
+    intro: '專注 B2B 系統與電商產品的 UI/UX 與產品規劃。我把模糊的需求變成工程師能直接開發的規格，也用 AI 把產品從 0 做到上線。',
+    featured: '精選作品',
+    allWorks: (n: number) => `全部 ${n} 個作品`,
+    servicesTitle: '接案合作',
+    servicesMore: '看服務與流程',
+    experienceTitle: '經歷',
+    experienceMore: '看完整經歷',
+    readCase: '看案例',
+    visitSite: '前往網站',
+    workTitle: '全部作品',
+    all: '全部',
+    filterLabel: '依分類篩選',
+    period: '期間',
+    role: '角色',
+    category: '分類',
+    prev: '← 上一個',
+    next: '下一個 →',
+    otherWork: '其他作品',
+    servicesLead: '可以遠端合作。從整理需求、設計介面，到用 AI 把網站做上線，可以只找我做其中一段，也可以整個交給我。',
+    servicesCta: '聊聊你的專案',
+    mailSubject: '專案合作洽詢',
+    servicesList: '服務項目',
+    processTitle: '合作流程',
+    pastClients: '做過的案子',
+    experienceLead: '6 年來從實體產品設計走到軟體 UX 與產品規劃。點專案名稱可以看完整案例。',
+    aboutTitle: '關於我',
+    intro2: '自我介紹',
+    education: '學歷',
+    skills: '專長',
+    awards: '得獎經歷',
+    photoAlt: '張品妏的照片',
+  },
+  en: {
+    htmlLang: 'en',
+    nav: { work: 'Work', services: 'Services', experience: 'Experience', about: 'About' },
+    switchTo: '中',
+    switchLabel: '切換到中文',
+    themeLabel: 'Toggle light / dark mode',
+    home: 'Home',
+    mainNav: 'Main menu',
+    contactTitle: "Let's talk",
+    contactText: "Looking for help with a product, an interface, or anything else? I'd love to hear from you. Available for remote work.",
+    contactCta: 'Get in touch',
+    footPages: 'Pages',
+    footWork: 'Work',
+    footContact: 'Contact',
+    footLinks: { work: 'All work', services: 'Services', experience: 'Experience', about: 'About' },
+    heroPortfolio: 'UI/UX & PRODUCT PORTFOLIO',
+    intro: 'UI/UX and product planning for B2B tools and e-commerce. I turn fuzzy requirements into specs engineers can build from, and use AI to take products from zero to launch.',
+    featured: 'Selected work',
+    allWorks: (n: number) => `All ${n} projects`,
+    servicesTitle: 'Work with me',
+    servicesMore: 'Services & process',
+    experienceTitle: 'Experience',
+    experienceMore: 'Full experience',
+    readCase: 'Read case',
+    visitSite: 'Visit site',
+    workTitle: 'All work',
+    all: 'All',
+    filterLabel: 'Filter by category',
+    period: 'Period',
+    role: 'Role',
+    category: 'Category',
+    prev: '← Previous',
+    next: 'Next →',
+    otherWork: 'More work',
+    servicesLead: 'Available for remote projects. From shaping requirements and designing the interface to shipping the site with AI: hire me for one part, or the whole thing.',
+    servicesCta: "Let's talk about your project",
+    mailSubject: 'Project inquiry',
+    servicesList: 'Services',
+    processTitle: 'How we work',
+    pastClients: 'Past projects',
+    experienceLead: '6 years, from physical product design to software UX and product planning. Click a project name to read the full case.',
+    aboutTitle: 'About',
+    intro2: 'Introduction',
+    education: 'Education',
+    skills: 'Skills',
+    awards: 'Awards',
+    photoAlt: 'Photo of Pin Wen Zhang',
+  },
+};

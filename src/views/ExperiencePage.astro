@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Experience from '../components/Experience.astro';
+import { ui, type Lang } from '../data/i18n';
+
+interface Props { lang: Lang; description: string; }
+const { lang, description } = Astro.props;
+const t = ui[lang];
+---
+<Base lang={lang} title={t.experienceTitle} description={description}>
+  <main class="wrap page">
+    <div class="eyebrow">Experience</div>
+    <h1>{t.experienceTitle}</h1>
+    <p class="lead">{t.experienceLead}</p>
+    <Experience lang={lang} />
+  </main>
+</Base>
+
+<style>
+  .page { padding-top: 140px; position: relative; z-index: 1; }
+  h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.2; margin-bottom: 16px; }
+  .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 36em; margin-bottom: 40px; }
+</style>
