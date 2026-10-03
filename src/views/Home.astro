@@ -129,10 +129,11 @@ const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured
   /* 3 on top, 2 centred below, all the same width: a 6-column grid where each card spans 2. */
   .works { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
   .works > :global(.work) { grid-column: span 2; }
-  .works > :global(.work:nth-child(4)) { grid-column: 2 / span 2; }
+  /* Centre the second row only when it has two cards (5 featured works). */
+  .works > :global(.work:nth-child(4):nth-last-child(2)) { grid-column: 2 / span 2; }
   @media (max-width: 960px) {
     .works { grid-template-columns: 1fr 1fr; }
-    .works > :global(.work), .works > :global(.work:nth-child(4)) { grid-column: auto; }
+    .works > :global(.work), .works > :global(.work:nth-child(4):nth-last-child(2)) { grid-column: auto; }
   }
 
   .split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
