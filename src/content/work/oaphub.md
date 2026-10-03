@@ -10,7 +10,7 @@ cover: /images/oaphub/oaphub-home.webp
 coverAlt: OAPhub 首頁，標題為 Open Agent Platform
 tags: [AI, MCP, 0 到 1, 資訊架構]
 order: 3
-featured: 2
+featured: 3
 metrics: []
 links:
   - { label: OAPhub 官網, href: "https://oaphub.ai/" }

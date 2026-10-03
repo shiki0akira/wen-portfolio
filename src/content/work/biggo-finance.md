@@ -10,6 +10,7 @@ cover: /images/biggo-finance/home.webp
 coverAlt: BigGo 財經首頁，有熱門焦點新聞、法說會與熱門 Podcast
 tags: [AI, 訂閱制, 資訊架構, B2C]
 order: 1.5
+featured: 2
 links:
   - { label: BigGo 財經, href: "https://finance.biggo.com.tw/" }
 ---

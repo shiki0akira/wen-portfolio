@@ -10,7 +10,7 @@ cover: /images/wms/rwd-mockup.webp
 coverAlt: WMS 倉儲系統的電腦版與手機版畫面
 tags: [B2B, 設計系統, RWD, 資訊架構]
 order: 5
-featured: 4
+featured: 5
 ---
 
 ## 專案簡介
