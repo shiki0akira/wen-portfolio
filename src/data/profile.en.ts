@@ -42,6 +42,14 @@ export const experience: Job[] = [
     summary: 'Owned flows, specs and UI for B2B and B2C products. Specs lived in Figma, and engineers built and tested against them.',
     projects: [
       {
+        name: 'BigGo Finance: AI financial news platform',
+        work: 'biggo-finance',
+        points: [
+          'Planned the home page, trending and recommended news, plus likes, saves and the saved page on every article',
+          'Designed Ask AI, scheduled alerts, usage billing and the pricing page, guiding users from the free plan to paid',
+        ],
+      },
+      {
         name: 'BIRSE: Shopify visual search app (lead)',
         work: 'birse',
         points: [

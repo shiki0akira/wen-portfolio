@@ -68,6 +68,14 @@ export const experience: Job[] = [
     summary: '負責 B2B 與 B2C 產品的流程、規格與介面。規格直接寫在 Figma 上，工程師照著開發和驗收。',
     projects: [
       {
+        name: 'BigGo 財經：AI 財經新聞平台',
+        work: 'biggo-finance',
+        points: [
+          '規劃首頁的熱門新聞與推薦內容，以及每篇新聞的按讚、收藏和收藏頁',
+          '設計 AI 詢問、排程通知、用量計費與方案頁，讓使用者從免費體驗順利升級付費',
+        ],
+      },
+      {
         name: 'BIRSE：Shopify 圖片搜尋套件（主要負責人）',
         work: 'birse',
         points: [
