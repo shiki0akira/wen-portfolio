@@ -11,7 +11,7 @@ export const profile = {
     { ability: 'Product experience across industries', value: 6, suffix: '', unit: 'years', desc: 'E-commerce, B2B SaaS, AI, fintech and industrial equipment', href: '/experience/', cta: 'See experience' },
     { ability: 'Projects delivered', value: 'works', suffix: '', unit: 'projects', desc: 'In-house products, side projects, freelance and competitions', href: '/work/', cta: 'See work' },
     { ability: 'Owning product results', value: 500, suffix: '+', unit: 'clients', desc: 'E-commerce clients on BIRSE, earning US$30K+ in annual recurring revenue', href: '/work/birse/', cta: 'Read case' },
-    { ability: 'Shipping fast with AI', value: 900, suffix: '+', unit: 'users', desc: 'On Web100, six products I built with AI', href: '/work/web100/', cta: 'Read case' },
+    { ability: 'Shipping fast with AI', value: 1, suffix: 'k+', unit: 'users', desc: 'On Web100, six products I built with AI', href: '/work/web100/', cta: 'Read case' },
   ],
 };
 
@@ -28,7 +28,7 @@ export const experience: Job[] = [
         work: 'web100',
         points: [
           'Built six interactive party web apps on my own with Claude Code, available in 8 languages',
-          '900+ users since launch; I run play-tests in person and keep improving them',
+          '1k+ users since launch; I run play-tests in person and keep improving them',
         ],
       },
     ],

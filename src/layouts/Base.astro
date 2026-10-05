@@ -205,7 +205,8 @@ const nav = [
             const t0 = performance.now();
             const tick = (now: number) => {
               const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 3);
-              el.textContent = Math.round(end * e) + suf;
+              // Thousands (suffix 'k+') count up in tenths: 0.3k+ ... 1k+.
+              el.textContent = (suf.startsWith('k') ? (end * e).toFixed(1).replace(/\.0$/, '') : Math.round(end * e)) + suf;
               if (k < 1) requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
