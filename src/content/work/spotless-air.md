@@ -12,6 +12,8 @@ order: 19
 metrics:
   - { value: 佳作, label: 2019 家電設計競賽 }
   - { value: 銅獎, label: 北科大設計週（燦坤企業贊助） }
+links:
+  - { label: Behance 完整介紹, href: "https://www.behance.net/gallery/97930469/Spotless-Air-Home-Guardian" }
 ---
 
 ## 專案簡介

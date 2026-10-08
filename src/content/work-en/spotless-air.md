@@ -8,6 +8,8 @@ tags: [Industrial design, Biomimicry, Award-winning]
 metrics:
   - { value: Honorable Mention, label: 2019 Home Appliance Design Competition }
   - { value: Bronze, label: Taipei Tech Design Week (Tsann Kuen) }
+links:
+  - { label: Full project on Behance, href: "https://www.behance.net/gallery/97930469/Spotless-Air-Home-Guardian" }
 ---
 
 ## Overview
