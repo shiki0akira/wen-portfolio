@@ -36,7 +36,7 @@ const featured = all.filter(w => w.data.featured).sort((a, b) => a.data.featured
           {profile.proofs.map(p => (
             <a class="proof" href={L(p.href)}>
               <h3>{p.ability}</h3>
-              <p class="num"><b data-count={p.value === 'works' ? all.length : p.value} data-suffix={p.suffix}>0</b>{p.unit && <span class="unit">{p.unit}</span>}</p>
+              <p class="num"><b data-count={p.value === 'works' ? all.length : p.value} data-suffix={p.suffix}>{p.value === 'works' ? all.length : p.value}{p.suffix}</b>{p.unit && <span class="unit">{p.unit}</span>}</p>
               <p class="desc">{p.desc}</p>
               <span class="go">{p.cta} <span aria-hidden="true">→</span></span>
             </a>

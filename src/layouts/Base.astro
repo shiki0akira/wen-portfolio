@@ -65,6 +65,7 @@ const nav = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <script is:inline>
+      document.documentElement.classList.add('js');
       try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     </script>
   </head>
@@ -195,6 +196,8 @@ const nav = [
 
       // Reveal on scroll + count-up numbers
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Numbers are real in the HTML (for no-JS readers and previews); with JS they count up from 0 when scrolled into view.
+      if (!reduce) document.querySelectorAll<HTMLElement>('[data-count]').forEach(el => { el.textContent = '0' + (el.dataset.suffix || ''); });
       const io = new IntersectionObserver(entries => {
         for (const en of entries) {
           if (!en.isIntersecting) continue;
