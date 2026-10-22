@@ -47,10 +47,10 @@ export const experience: Job[] = [
     title: 'UI/UX 設計師・獨立產品開發',
     company: '自由工作者',
     meta: '遠端',
-    summary: '接 UI/UX 設計案，同時經營自己的產品 Woohop（原 Web100）。',
+    summary: '接 UI/UX 設計案，同時經營自己的產品 Woohop。',
     projects: [
       {
-        name: '個人產品：Woohop 破冰遊戲工具箱（原 Web100）',
+        name: '個人產品：Woohop 破冰遊戲工具箱',
         work: 'web100',
         points: [
           '用 Claude Code 獨立做出 6 個聚會用的互動網頁，支援 8 種語言',

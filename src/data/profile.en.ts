@@ -21,10 +21,10 @@ export const experience: Job[] = [
     title: 'UI/UX Designer & Indie Product Builder',
     company: 'Freelance',
     meta: 'Remote',
-    summary: 'Taking on UI/UX projects while running my own product, Woohop (formerly Web100).',
+    summary: 'Taking on UI/UX projects while running my own product, Woohop.',
     projects: [
       {
-        name: 'Side project: Woohop icebreaker toolkit (formerly Web100)',
+        name: 'Side project: Woohop icebreaker toolkit',
         work: 'web100',
         points: [
           'Built six interactive party web apps on my own with Claude Code, available in 8 languages',
