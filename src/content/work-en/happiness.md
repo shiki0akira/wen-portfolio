@@ -14,7 +14,7 @@ links:
 
 ## Overview
 
-Happiness Simulator is an interactive game designed for a 7-week church group course, and the largest product in Woohop (formerly Web100).
+Happiness Simulator is an interactive game designed for a 7-week church group course, and the largest product in Woohop.
 
 There are two lines on screen. The top one gets pushed around by life: a promotion, an accident, a medical report, things you can't control. The bottom one isn't affected and only grows. After seven levels the two lines sit side by side, and nobody needs to tell you which one is happiness.
 

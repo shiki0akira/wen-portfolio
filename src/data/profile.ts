@@ -23,7 +23,7 @@ export const profile = {
     { ability: '跨產業的產品經驗', value: 6, suffix: '', unit: '年', desc: '電商、B2B SaaS、AI、金融科技、工業設備', href: '/experience/', cta: '看經歷' },
     { ability: '做過的專案作品', value: 'works', suffix: '', unit: '個', desc: '正職、個人產品、接案與競賽', href: '/work/', cta: '看作品' },
     { ability: '為產品結果負責', value: 500, suffix: '+', unit: '家', desc: 'BIRSE 電商客戶，每年營收破百萬', href: '/work/birse/', cta: '看案例' },
-    { ability: '用 AI 快速做出產品', value: 1, suffix: 'k+', unit: '位', desc: 'Woohop 使用者，6 個產品都是我用 AI 做的', href: '/work/web100/', cta: '看案例' },
+    { ability: '用 AI 快速做出產品', value: 1.3, suffix: 'k+', unit: '位', desc: 'Woohop 使用者，每個遊戲都是我用 AI 做的', href: '/work/web100/', cta: '看案例' },
   ],
 };
 
@@ -53,8 +53,8 @@ export const experience: Job[] = [
         name: '個人產品：Woohop 破冰遊戲工具箱',
         work: 'web100',
         points: [
-          '用 Claude Code 獨立做出 6 個聚會用的互動網頁，支援 8 種語言',
-          '上線至今 1k+ 位使用者，也親自帶人試玩，持續修正',
+          '用 Claude Code 獨立做出一系列聚會用的互動網頁，支援 8 種語言',
+          '上線至今 1.3k+ 位使用者，也親自帶人試玩，持續修正',
           '從遊戲合集改版成給帶領者用的破冰工具箱：依人數挑遊戲、自動搭配破冰流程',
         ],
       },
