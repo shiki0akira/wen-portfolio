@@ -21,15 +21,18 @@ export const experience: Job[] = [
     title: 'UI/UX Designer & Indie Product Builder',
     company: 'Freelance',
     meta: 'Remote',
-    summary: 'Taking on UI/UX projects while running my own product, Woohop.',
+    summary: 'Taking on UI/UX projects while running my own product, Woohop, single-handed: from product planning and design to development and social media.',
     projects: [
       {
         name: 'Side project: Woohop icebreaker toolkit',
         work: 'web100',
         points: [
-          'Built a series of interactive party web apps on my own with Claude Code, available in 8 languages',
-          '3k+ users since launch and 1.9k+ monthly active users; I run play-tests in person and keep improving them',
-          'Redesigned the game collection into a toolkit for group leaders: games matched to group size, plus ready-made icebreaker flows',
+          'Run every part of the product alone: planning, UI/UX design, development, analytics and Threads marketing',
+          'Product planning: set a two-year growth goal with quarterly checkpoints, plan work weekly and use data at each checkpoint to decide what comes next',
+          'Design & development: built multiplayer room games with Claude Code that players join by scanning a QR code, in 8 languages; redesigned the game collection into a toolkit for group leaders',
+          'Data & growth: connected GA4 to generate weekly reports tracking hosts, search traffic and social referrals; 3k+ users since launch and 1.9k+ monthly active users',
+          'Social media: publish 5–6 Threads posts a week through a scheduling tool I built, with UTM links to measure referrals',
+          'AI workflow: split development, social and analytics across three AI assistants that report progress to Notion, while I review and decide',
         ],
       },
     ],
